@@ -62,4 +62,4 @@ jobs:
           NEW_TASK_DEFINITION_REVISION=$(aws ecs describe-task-definition --task-definition schedulebot --region $AWS_REGION | jq -r '.taskDefinition.taskDefinitionArn')
       
           # Update the ECS service to use the new task definition revision
-          aws ecs update-service --cluster faceless-scheduler-bot-cluster --service faceless-scheduler-bot-service --task-definition $NEW_TASK_DEFINITION_REVISION --region $AWS_REGION
+          aws ecs update-service --cluster faceless-scheduling --service faceless-scheduling --task-definition $NEW_TASK_DEFINITION_REVISION --region $AWS_REGION
