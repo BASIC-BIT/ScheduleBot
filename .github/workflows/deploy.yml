@@ -46,7 +46,7 @@ jobs:
           ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
         run: |
           # Get the current task definition
-          TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition faceless-scheduler-bot-task --region $AWS_REGION)
+          TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition schedulebot --region $AWS_REGION)
       
           # Update the container image in the task definition
           NEW_TASK_DEFINITION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:latest" '.taskDefinition | .containerDefinitions[0].image = $IMAGE')
@@ -59,7 +59,7 @@ jobs:
           aws ecs register-task-definition --cli-input-json file://new-task-def.json
       
           # Get the new task definition revision
-          NEW_TASK_DEFINITION_REVISION=$(aws ecs describe-task-definition --task-definition faceless-scheduler-bot-task --region $AWS_REGION | jq -r '.taskDefinition.taskDefinitionArn')
+          NEW_TASK_DEFINITION_REVISION=$(aws ecs describe-task-definition --task-definition schedulebot --region $AWS_REGION | jq -r '.taskDefinition.taskDefinitionArn')
       
           # Update the ECS service to use the new task definition revision
           aws ecs update-service --cluster faceless-scheduler-bot-cluster --service faceless-scheduler-bot-service --task-definition $NEW_TASK_DEFINITION_REVISION --region $AWS_REGION
