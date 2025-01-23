@@ -22,7 +22,7 @@ namespace SchedulingAssistant.Commands
     public class Admin : ApplicationCommandModule
     {
         [SlashCommand("refesh", "Refreshes the UI of the schedules that haven't ended. Purely to fix the UI.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task Refresh(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync($"Working on it!", true);
@@ -72,7 +72,7 @@ namespace SchedulingAssistant.Commands
 
 
         [SlashCommand("setEventChannel", "Set Channel for Events.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task SetEventChannel(InteractionContext ctx, [Option("Channel", "Channel for bot to post events", false)] DiscordChannel Channel)
         {
             using (var db = new DBEntities())
@@ -94,7 +94,7 @@ namespace SchedulingAssistant.Commands
         }
 
         [SlashCommand("getAttendanceReport", "Gets attendance report for a date range.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task GetAttendanceReport(
             InteractionContext ctx,
             [Option("StartDate", "Date to start the report", false)] string StartDateForEvent,
@@ -222,7 +222,7 @@ namespace SchedulingAssistant.Commands
 
 
         [SlashCommand("version", "Get Schedulebot Version.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task GetVersion(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync(@$"I am running version {Assembly.GetEntryAssembly().GetName().Version}", true);
@@ -230,7 +230,7 @@ namespace SchedulingAssistant.Commands
 
 
         [SlashCommand("restartEvent", "Restarts Event.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task RestartEvent(
             InteractionContext ctx,
             [Option("EventId", "The ID of the Event", false)] string MessageId
@@ -346,7 +346,7 @@ namespace SchedulingAssistant.Commands
 
 
         [SlashCommand("Event", "Post Event.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task PostEvent(
             InteractionContext ctx,
             [Option("Name", "Name of the event", false)] string EventName,
@@ -523,7 +523,7 @@ namespace SchedulingAssistant.Commands
 
 
         [SlashCommand("Edit", "Edit Event.")]
-        [SlashRequireUserPermissions(Permissions.ManageMessages | Permissions.Administrator | Permissions.All)]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task Edit(
             InteractionContext ctx,
             [Option("EventId", "The ID of the Event", false)] string MessageId,
