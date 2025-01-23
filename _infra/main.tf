@@ -244,7 +244,7 @@ resource "aws_ecs_service" "main" {
   desired_count = 1
   launch_type = "FARGATE"
   network_configuration {
-    subnets = aws_subnet.public[*].id
+    subnets = concat(aws_subnet.public[*].id, aws_subnet.private[*].id)
     security_groups = [aws_security_group.ecs.id]
     assign_public_ip = true
   }
