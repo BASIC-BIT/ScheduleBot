@@ -176,6 +176,15 @@ resource "aws_ecs_cluster" "main" {
   name = "faceless-scheduling"
 }
 
+resource "aws_cloudwatch_log_group" "app_log_group" {
+  name              = "/ecs/faceless-scheduling-bot"
+  retention_in_days = 7
+
+  tags = {
+    Name = "app-log-group"
+  }
+}
+
 resource "aws_ecs_task_definition" "main" {
   family = "schedulebot"
   network_mode = "awsvpc"
@@ -194,6 +203,14 @@ resource "aws_ecs_task_definition" "main" {
           hostPort = 80
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          "awslogs-group"         = aws_cloudwatch_log_group.app_log_group.name
+          "awslogs-region"        = "us-east-1"
+          "awslogs-stream-prefix" = "ecs"
+        }
+      }
       environment = [
         {
           name = "DISCORD_BOT_TOKEN"
