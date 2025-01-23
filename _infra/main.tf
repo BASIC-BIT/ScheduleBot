@@ -229,7 +229,7 @@ resource "aws_ecs_task_definition" "main" {
           value = "schedulebot"
         },
         {
-          name = "MYSQL_PASSWORD"
+          name = "MYSQL_USER_PW"
           value = var.mysql_password
         }
       ]
