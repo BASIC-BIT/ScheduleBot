@@ -163,7 +163,7 @@ namespace SchedulingAssistant.Services
                     {
                         case "Delete":
                             DiscordMember DiscordMember = (DiscordMember)e.User;
-                            if (!DiscordMember.Roles.Any(x => x.CheckPermission(Permissions.ManageMessages | Permissions.Administrator) == PermissionLevel.Allowed))
+                            if (!DiscordMember.IsOwner && !DiscordMember.Roles.Any(x => x.CheckPermission(Permissions.ManageMessages | Permissions.Administrator) == PermissionLevel.Allowed))
                             {
                                 _logger.LogInformation($"User {e.Interaction.User.Username} is does not have permission to remove an event");
                                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);

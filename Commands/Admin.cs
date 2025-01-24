@@ -14,6 +14,8 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Channels;
+using CsvHelper.Configuration;
+using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 
 
@@ -67,9 +69,6 @@ namespace SchedulingAssistant.Commands
                 }
             }
         }
-
-
-
 
         [SlashCommand("setEventChannel", "Set Channel for Events.")]
         [SlashRequireUserPermissions(Permissions.ManageMessages)]
@@ -275,12 +274,13 @@ namespace SchedulingAssistant.Commands
 
                 if (Schedule.HasEnded == true)
                 {
-                    var RoleName =  Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX") ?? "EventRole";
+                    var BaseRoleName = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX")) ? "EventRole" : Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX");
+                    string RoleName;
                     int i = 0;
                     do
                     {
                         i++;
-                        RoleName = $"V{RoleName}-{i}";
+                        RoleName = $"{BaseRoleName}-{i}";
                     }
                     while (ctx.Guild.Roles.Values.FirstOrDefault(x => x.Name == RoleName) != null);
 
@@ -374,7 +374,6 @@ namespace SchedulingAssistant.Commands
 
                 try
                 {
-                    Regex TimeCode = new Regex(@"\<t:(\d*):[a-zA-Z]{1}\>");
                     if (TimeCode.IsMatch(EventStart))
                     {
                         long unixTimeStamp = long.Parse(TimeCode.Match(EventStart).Groups[1].Value);
@@ -448,13 +447,13 @@ namespace SchedulingAssistant.Commands
 
 
 
-
-                var RoleName = Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX") ?? "EventRole";
+                var BaseRoleName = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX")) ? "EventRole" : Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX");
+                string RoleName;
                 int i = 0;
                 do
                 {
                     i++;
-                    RoleName = $"{RoleName }-{i}";
+                    RoleName = $"{BaseRoleName}-{i}";
                 }
                 while (ctx.Guild.Roles.Values.FirstOrDefault(x => x.Name == RoleName) != null);
 
@@ -516,7 +515,6 @@ namespace SchedulingAssistant.Commands
                 {
                     await DiscordRole.DeleteAsync();
                     await ctx.CreateResponseAsync($"There was an error making your event.", true);
-
                 }
             }
         }
@@ -740,6 +738,178 @@ namespace SchedulingAssistant.Commands
 
                 }
             }
+        }
+        
+        private static Regex TimeCode = new Regex(@"\<t:(\d*):[a-zA-Z]{1}\>");
+        private static Regex VrcUserUrl = new Regex(@"https:\/\/vrchat\.com\/home\/user\/usr_([a-zA-Z0-9-]{36})");
+        private static Regex VrcWorldUrl = new Regex(@"https:\/\/vrchat\.com\/home\/world\/wrld_([a-zA-Z0-9-]{36})");
+
+        private async Task CleanupRoles(List<DiscordRole> roles)
+        {
+            foreach (var discordRole in roles)
+            {
+                await discordRole.DeleteAsync();
+            }
+        }
+
+
+        // [SlashCommand("CleanupAllEventRoles", "Cleanup all event roles, dangerous with existing events!")]
+        // [SlashRequireUserPermissions(Permissions.ManageMessages)]
+        // public async Task CleanupAllEventRoles(InteractionContext ctx)
+        // {
+        //     await ctx.DeferAsync(true);
+        //     var roleName = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX")) ? "EventRole" : Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX");
+        //
+        //     var rolesToCleanUp = ctx.Guild.Roles.Values.Where(role => role.Name.StartsWith(roleName)).ToList();
+        //     await CleanupRoles(rolesToCleanUp);
+        //
+        //     await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Done!"));
+        // }
+        
+        
+        [SlashCommand("ImportEvents", "Import events from TeamUp CSV Export")]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
+        public async Task ImportEvents(
+            InteractionContext ctx,
+            [Option("TeamUpCsv", "CSV Exported from TeamUp", false)] DiscordAttachment csv)
+        {
+            await ctx.DeferAsync(true);
+            List<DiscordRole> createdRoles = new List<DiscordRole>();
+            List<Schedule> createdSchedules = new List<Schedule>();
+            await using var db = new DBEntities();
+            await using var transaction = await db.Database.BeginTransactionAsync();
+            
+            var ServerSetting = db.ServerSettings.FirstOrDefault(x => x.ServerId == ctx.Guild.Id) ??
+                                new ServerSetting(ctx.Guild.Id);
+            if (ServerSetting.ChannelId == null)
+            {
+                await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(
+                    $"No Event Channel Set. Have admin set channel using /setEventChannel"));
+                await transaction.RollbackAsync();
+                return;
+            }
+                    
+                    
+            // Download CSV from csv.url, parse it as data
+            HttpClient client = new HttpClient();
+            var stream = await client.GetStreamAsync(csv.Url);
+            StreamReader reader = new StreamReader(stream);
+            using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
+            var records = csvReader.GetRecords<TeamUpEvent>();
+            var events = records.ToList();
+                    
+            foreach (var e in events)
+            {
+                var startDate = DateTime.Parse($"{e.StartDate} {e.StartTime}");
+                var endDate = DateTime.Parse($"{e.EndDate} {e.EndTime}");
+                        
+                // Parse the first match of VrcUserUrl
+                var userUrlMatch = VrcUserUrl.Match(e.Who);
+                var userUrl = userUrlMatch.Success ? userUrlMatch.Groups[0].Value : "";
+                var worldUrlMatch = VrcWorldUrl.Match(e.Location);
+                var worldUrl = worldUrlMatch.Success ? worldUrlMatch.Groups[0].Value : null;
+
+                var description = e.Description
+                    .Replace("\\[", "[")
+                    .Replace("\\]", "]")
+                    .Replace("\\*", "*");
+                        
+                var BaseRoleName = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX")) ? "EventRole" : Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX");
+                string RoleName;
+                int i = 0;
+                do
+                {
+                    i++;
+                    RoleName = $"{BaseRoleName}-{i}";
+                }
+                while (ctx.Guild.Roles.Values.FirstOrDefault(x => x.Name == RoleName) != null || createdRoles.FirstOrDefault(x => x.Name == RoleName) != null);
+
+                DiscordRole? DiscordRole = await ctx.Guild.CreateRoleAsync(RoleName);
+                if (DiscordRole == null)
+                {
+                    await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent($"Unable to create role. Check Permissions as this role already exists."));
+                    await transaction.RollbackAsync();
+                    await CleanupRoles(createdRoles);
+                    return;
+                }
+                createdRoles.Add(DiscordRole);
+                        
+                try
+                {
+                    // foreach (var systemTimeZone in TimeZoneInfo.GetSystemTimeZones())
+                    // {
+                    //     Console.WriteLine(systemTimeZone.DisplayName);
+                    // }
+                    Schedule NewEvent = new(startDate, endDate, ctx.Guild.Id, e.Subject, userUrl, (ulong)DiscordRole.Id, HostId: 0, HostName: "clear", TimeZone: "(UTC-06:00) Central Time (Chicago)", WorldLink: worldUrl, EventDescription: description, ImageURL: null);
+                    await NewEvent.Update(db);
+                    createdSchedules.Add(NewEvent);
+
+                    var dbEvent = db.Schedules.FirstOrDefault(x => x.RoleId == (ulong)DiscordRole.Id);
+                    if (dbEvent != null)
+                    {
+                        try
+                        {
+                            DiscordMessageBuilder MBuilder = dbEvent.BuildMessage();
+                                    
+                            var Message = await ctx.Guild.GetChannel((ulong)ServerSetting.ChannelId).SendMessageAsync(MBuilder);
+                            dbEvent.EventId = Message.Id;
+                            await dbEvent.Update(db);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine(ex);
+                            await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent($"There was an error making your event. Ensure your description is not too long (1024 chars max for the whole embed)."));
+                            await transaction.RollbackAsync();
+                            await CleanupRoles(createdRoles);
+                            return;
+
+                        }
+                    }
+                }
+                catch(Exception ex) 
+                {
+                    Console.WriteLine(ex);
+                    await DiscordRole.DeleteAsync();
+                    await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent($"There was an error making your events."));
+                    await transaction.RollbackAsync();
+                    await CleanupRoles(createdRoles);
+                    return;
+                }
+            }
+
+            // Create txt file attachment with summary
+            var summary = ComposeEventSummary(createdSchedules);
+            var filePath = $"{ctx.InteractionId}.txt";
+            await File.WriteAllTextAsync(filePath, summary);
+            using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            
+            await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent($"Here you go!").AddFile(fs));
+            
+            // Cleanup file
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+            
+            await transaction.CommitAsync();
+        }
+
+        private string ComposeEventSummary(List<Schedule> schedules)
+        {
+            string output = "";
+            schedules.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
+            for (var i = 0; i < schedules.Count; i++)
+            {
+                var schedule = schedules[i];
+                var number = i + 1;
+                var dayOfTheWeek = schedule.StartTime.DayOfWeek.ToString();
+                // Convert to Discord time string
+                
+                var discordTimeString = $"<t:{new DateTimeOffset(schedule.StartTime).ToUnixTimeSeconds()}:f>";
+                output += $"{number} {dayOfTheWeek}: **{schedule.EventTitle}** on {discordTimeString}\n";
+            }
+
+            return output;
         }
     }
 }

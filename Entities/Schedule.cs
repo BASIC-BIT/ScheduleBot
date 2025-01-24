@@ -72,38 +72,46 @@ namespace SchedulingAssistant.Entities
             this.ImageURL = ImageURL;
         }
 
-        public async Task Update()
+        public async Task Update(DBEntities? db = null)
         {
-            using (var db = new DBEntities())
+            if (db == null)
             {
-                var dbSchedule = db.Schedules.FirstOrDefault(x => x.Id == this.Id);
-                if (dbSchedule != null)
-                {
-                    dbSchedule.StartTime = StartTime;
-                    dbSchedule.EndTime = EndTime;
-                    dbSchedule.TimeZone = TimeZone;
-                    dbSchedule.ServerId = ServerId;
-                    dbSchedule.EventId = EventId;
-                    dbSchedule.Attendees = Attendees;
-                    dbSchedule.ThreadId = ThreadId;
-                    dbSchedule.EventTitle = EventTitle;
-                    dbSchedule.EventDescription = EventDescription;
-                    dbSchedule.HostId = HostId;
-                    dbSchedule.RoleId = RoleId;
-                    dbSchedule.WorldLink = WorldLink;
-                    dbSchedule.HostName = HostName;
-                    dbSchedule.Attendees = Attendees;
-                    dbSchedule.IsActive = IsActive;
-                    dbSchedule.HasEnded = HasEnded;
-                    dbSchedule.HostURL = HostURL;
-                    dbSchedule.ImageURL = ImageURL;
-                }
-                else
-                {
-                    db.Schedules.Add(this);
-                }
-                await db.SaveChangesAsync();
+                await using var dbNew = new DBEntities();
+                await UpdateInternal(dbNew);
+                return;
             }
+            await UpdateInternal(db);
+        }
+
+        private async Task UpdateInternal(DBEntities db)
+        {
+            var dbSchedule = db.Schedules.FirstOrDefault(x => x.Id == this.Id);
+            if (dbSchedule != null)
+            {
+                dbSchedule.StartTime = StartTime;
+                dbSchedule.EndTime = EndTime;
+                dbSchedule.TimeZone = TimeZone;
+                dbSchedule.ServerId = ServerId;
+                dbSchedule.EventId = EventId;
+                dbSchedule.Attendees = Attendees;
+                dbSchedule.ThreadId = ThreadId;
+                dbSchedule.EventTitle = EventTitle;
+                dbSchedule.EventDescription = EventDescription;
+                dbSchedule.HostId = HostId;
+                dbSchedule.RoleId = RoleId;
+                dbSchedule.WorldLink = WorldLink;
+                dbSchedule.HostName = HostName;
+                dbSchedule.Attendees = Attendees;
+                dbSchedule.IsActive = IsActive;
+                dbSchedule.HasEnded = HasEnded;
+                dbSchedule.HostURL = HostURL;
+                dbSchedule.ImageURL = ImageURL;
+            }
+            else
+            {
+                db.Schedules.Add(this);
+            }
+            await db.SaveChangesAsync();
         }
 
 
@@ -195,8 +203,10 @@ namespace SchedulingAssistant.Entities
                 Builder.AddField("Host", $"<@{HostId}>", true);
             }
 
-
-            Builder.AddField("Profile", $"[Here]({HostURL})", true);
+            if (!string.IsNullOrEmpty(HostURL))
+            {
+                Builder.AddField("Profile", $"[Here]({HostURL})", true);
+            }
 
             // Danger: Zero Width character:
             char ZWC = '\u200B';
