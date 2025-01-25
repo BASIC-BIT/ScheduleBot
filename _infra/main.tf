@@ -231,6 +231,10 @@ resource "aws_ecs_task_definition" "main" {
         {
           name = "MYSQL_USER_PW"
           value = var.mysql_password
+        },
+        {
+          name = "DISCORD_EVENT_ROLE_PREFIX"
+          value = "FacelessEvent"
         }
       ]
     }

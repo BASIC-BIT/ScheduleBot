@@ -10,6 +10,7 @@ using SchedulingAssistant.Models;
 using SchedulingAssistant.Services;
 using System.Formats.Asn1;
 using System.Globalization;
+using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -800,9 +801,16 @@ namespace SchedulingAssistant.Commands
                     
             foreach (var e in events)
             {
-                var startDate = DateTime.Parse($"{e.StartDate} {e.StartTime}");
-                var endDate = DateTime.Parse($"{e.EndDate} {e.EndTime}");
+                // TODO: Fix this hacky timezone nonsense
+                var startDateUnspecified = DateTime.Parse($"{e.StartDate} {e.StartTime}");
+                var endDateUnspecified = DateTime.Parse($"{e.EndDate} {e.EndTime}");
                         
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTime startDateCstTime = DateTime.SpecifyKind(startDateUnspecified, DateTimeKind.Unspecified);
+                DateTime startDate = DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeToUtc(startDateCstTime, cstZone), DateTimeKind.Unspecified);
+                DateTime endDateCstTime = DateTime.SpecifyKind(endDateUnspecified, DateTimeKind.Unspecified);
+                DateTime endDate = DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeToUtc(endDateCstTime, cstZone), DateTimeKind.Unspecified);
+                
                 // Parse the first match of VrcUserUrl
                 var userUrlMatch = VrcUserUrl.Match(e.Who);
                 var userUrl = userUrlMatch.Success ? userUrlMatch.Groups[0].Value : "";
@@ -812,8 +820,13 @@ namespace SchedulingAssistant.Commands
                 var description = e.Description
                     .Replace("\\[", "[")
                     .Replace("\\]", "]")
-                    .Replace("\\*", "*");
-                        
+                    .Replace("\\*", "*")
+                    .Replace("\u00A0", ""); // NBSP
+                description = WebUtility.HtmlDecode(description);
+                // Find and replace all instances of links in the format of [http://thing.com](https://thing.com), discord doesn't like those for some reason lmao
+                Regex regex = new Regex(@"\[(http[s]?:\/\/[^]]+)\]\(\1\)", RegexOptions.Multiline);
+                description = regex.Replace(description, "$1 ");
+                
                 var BaseRoleName = String.IsNullOrEmpty(Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX")) ? "EventRole" : Environment.GetEnvironmentVariable("DISCORD_EVENT_ROLE_PREFIX");
                 string RoleName;
                 int i = 0;
@@ -878,7 +891,7 @@ namespace SchedulingAssistant.Commands
             }
 
             // Create txt file attachment with summary
-            var summary = ComposeEventSummary(createdSchedules);
+            var summary = await ComposeEventSummary(ctx, createdSchedules);
             var filePath = $"{ctx.InteractionId}.txt";
             await File.WriteAllTextAsync(filePath, summary);
             using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
@@ -894,19 +907,54 @@ namespace SchedulingAssistant.Commands
             await transaction.CommitAsync();
         }
 
-        private string ComposeEventSummary(List<Schedule> schedules)
+        private async Task<string> ComposeEventSummary(InteractionContext ctx, List<Schedule> schedules)
         {
+            using var db = new DBEntities();
+            
             string output = "";
+            var serverSetting = db.ServerSettings.FirstOrDefault(x => x.ServerId == ctx.Guild.Id) ??
+                                new ServerSetting(ctx.Guild.Id);
+            var channel = ctx.Guild.GetChannel((ulong)serverSetting.ChannelId);
+            
             schedules.Sort((a, b) => a.StartTime.CompareTo(b.StartTime));
             for (var i = 0; i < schedules.Count; i++)
             {
                 var schedule = schedules[i];
                 var number = i + 1;
-                var dayOfTheWeek = schedule.StartTime.DayOfWeek.ToString();
-                // Convert to Discord time string
                 
-                var discordTimeString = $"<t:{new DateTimeOffset(schedule.StartTime).ToUnixTimeSeconds()}:f>";
-                output += $"{number} {dayOfTheWeek}: **{schedule.EventTitle}** on {discordTimeString}\n";
+                // TODO: Fix this hacky timezone nonsense
+                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
+                DateTimeOffset time =
+                    new DateTimeOffset(DateTime.SpecifyKind(schedule.StartTime, DateTimeKind.Unspecified),
+                        -cstZone.GetUtcOffset(DateTime.UtcNow));
+                // TODO: SOMEHOW the day of the week is off by one!??!?! what the heck
+                var dayOfTheWeek = time.AddDays(-1).ToString("dddd");
+                
+                var discordTimeString = $"<t:{time.ToUnixTimeSeconds()}:F>";
+
+                var message = await channel.GetMessageAsync(schedule.EventId);
+                var messageUrl = message.JumpLink;
+
+                output += $"📅  {number}.  {dayOfTheWeek}: [**{schedule.EventTitle}**]({messageUrl}) on {discordTimeString}\n" +
+                          $"{schedule.EventDescription}\n";
+
+                List<string> links = new List<string>();
+                
+                if (!string.IsNullOrEmpty(schedule.HostURL))
+                {
+                    links.Add($"[Add The Host]({schedule.HostURL})");
+                }
+                links.Add($"[Sign up here!]({messageUrl})");
+                // if (!string.IsNullOrEmpty(schedule.WorldLink))
+                // {
+                //     links.Add($"[World Location]({schedule.WorldLink})\n");
+                // }
+                // links.Add($"[VRChat Group](https://vrc.group/NOFACE.0408)");
+                // links.Add($"[Discord](https://discord.gg/thefaceless)");
+
+                output += $"{string.Join(" - ", links)}\n";
+
+                output += "\n";
             }
 
             return output;

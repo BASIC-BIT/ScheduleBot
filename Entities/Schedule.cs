@@ -309,12 +309,12 @@ Available flags:
 
             if (Hours > 0)
             {
-                finalTimestamp = Hours.ToString() + " Hours ";
+                finalTimestamp = Hours.ToString() + $" Hour{(Hours > 1 ? "s" : "")} ";
             }
 
             if (Mins > 0)
             {
-                finalTimestamp = Mins.ToString() + " Mins";
+                finalTimestamp += Mins.ToString() + $" Min{(Mins > 1 ? "s" : "")}";
             }
 
             return finalTimestamp;
