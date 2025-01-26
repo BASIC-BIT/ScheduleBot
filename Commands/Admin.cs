@@ -3,21 +3,12 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
-using Microsoft.Extensions.Logging;
-using MySqlX.XDevAPI;
 using SchedulingAssistant.Entities;
 using SchedulingAssistant.Models;
-using SchedulingAssistant.Services;
-using System.Formats.Asn1;
 using System.Globalization;
 using System.Net;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Channels;
-using CsvHelper.Configuration;
-using Microsoft.EntityFrameworkCore;
-using static System.Net.Mime.MediaTypeNames;
 
 
 namespace SchedulingAssistant.Commands
@@ -49,14 +40,12 @@ namespace SchedulingAssistant.Commands
                     return;
                 }
 
-
                 var schedules = db.Schedules.Where(x => (x.ServerId == ctx.Guild.Id) && (x.HasEnded == false)).ToList();
 
                 foreach (var schedule in schedules)
                 {
                     try
                     {
-
                         DiscordMessage? message = await Channel.GetMessageAsync(schedule.EventId);
                         if (message != null)
                         {
@@ -169,7 +158,6 @@ namespace SchedulingAssistant.Commands
                         }
                     }
 
-
                     if (Output.Count == 0)
                     {
                         DMB.WithContent("There are no events in that time range");
@@ -194,8 +182,6 @@ namespace SchedulingAssistant.Commands
                             csvF.WriteRecords(Output);
                         }
 
-
-
                         using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                         {
                             var dmb = new DiscordMessageBuilder()
@@ -219,15 +205,12 @@ namespace SchedulingAssistant.Commands
             }
         }
 
-
-
         [SlashCommand("version", "Get Schedulebot Version.")]
         [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task GetVersion(InteractionContext ctx)
         {
             await ctx.CreateResponseAsync(@$"I am running version {Assembly.GetEntryAssembly().GetName().Version}", true);
         }
-
 
         [SlashCommand("restartEvent", "Restarts Event.")]
         [SlashRequireUserPermissions(Permissions.ManageMessages)]
@@ -333,18 +316,9 @@ namespace SchedulingAssistant.Commands
                 {
                     await DiscordRole.DeleteAsync();
                     await ctx.CreateResponseAsync($"There was an error restarting your event.", true);
-
                 }
-
-
-
             }
         }
-
-
-
-
-
 
         [SlashCommand("Event", "Post Event.")]
         [SlashRequireUserPermissions(Permissions.ManageMessages)]
@@ -766,8 +740,7 @@ namespace SchedulingAssistant.Commands
         //
         //     await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Done!"));
         // }
-        
-        
+
         [SlashCommand("ImportEvents", "Import events from TeamUp CSV Export")]
         [SlashRequireUserPermissions(Permissions.ManageMessages)]
         public async Task ImportEvents(
@@ -789,8 +762,7 @@ namespace SchedulingAssistant.Commands
                 await transaction.RollbackAsync();
                 return;
             }
-                    
-                    
+
             // Download CSV from csv.url, parse it as data
             HttpClient client = new HttpClient();
             var stream = await client.GetStreamAsync(csv.Url);
@@ -798,13 +770,13 @@ namespace SchedulingAssistant.Commands
             using var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
             var records = csvReader.GetRecords<TeamUpEvent>();
             var events = records.ToList();
-                    
+
             foreach (var e in events)
             {
                 // TODO: Fix this hacky timezone nonsense
                 var startDateUnspecified = DateTime.Parse($"{e.StartDate} {e.StartTime}");
                 var endDateUnspecified = DateTime.Parse($"{e.EndDate} {e.EndTime}");
-                        
+
                 TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
                 DateTime startDateCstTime = DateTime.SpecifyKind(startDateUnspecified, DateTimeKind.Unspecified);
                 DateTime startDate = DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeToUtc(startDateCstTime, cstZone), DateTimeKind.Unspecified);
@@ -846,7 +818,7 @@ namespace SchedulingAssistant.Commands
                     return;
                 }
                 createdRoles.Add(DiscordRole);
-                        
+
                 try
                 {
                     // foreach (var systemTimeZone in TimeZoneInfo.GetSystemTimeZones())
@@ -940,10 +912,10 @@ namespace SchedulingAssistant.Commands
 
                 List<string> links = new List<string>();
                 
-                if (!string.IsNullOrEmpty(schedule.HostURL))
-                {
-                    links.Add($"[Add The Host]({schedule.HostURL})");
-                }
+                // if (!string.IsNullOrEmpty(schedule.HostURL))
+                // {
+                //     links.Add($"[Add The Host]({schedule.HostURL})");
+                // }
                 links.Add($"[Sign up here!]({messageUrl})");
                 // if (!string.IsNullOrEmpty(schedule.WorldLink))
                 // {

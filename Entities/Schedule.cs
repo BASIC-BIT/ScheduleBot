@@ -203,10 +203,10 @@ namespace SchedulingAssistant.Entities
                 Builder.AddField("Host", $"<@{HostId}>", true);
             }
 
-            if (!string.IsNullOrEmpty(HostURL))
-            {
-                Builder.AddField("Profile", $"[Here]({HostURL})", true);
-            }
+            // if (!string.IsNullOrEmpty(HostURL))
+            // {
+            //     Builder.AddField("Profile", $"[Here]({HostURL})", true);
+            // }
 
             // Danger: Zero Width character:
             char ZWC = '\u200B';
