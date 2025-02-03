@@ -15,7 +15,6 @@ namespace SchedulingAssistant.Entities
         public int Id { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public string TimeZone { get; set; }
         public ulong ServerId { get; set; }
         [Description("Message Id of the Event")]
         public ulong EventId { get; set; }
@@ -44,22 +43,10 @@ namespace SchedulingAssistant.Entities
 
         public List<Attendence> Attendees { get; set; } = new List<Attendence>();
 
-        public Schedule(DateTime StartTime, DateTime EndTime, ulong ServerId, string EventTitle, string HostURL, ulong? RoleId = null, ulong EventId = 0, ulong HostId = 0, string HostName = "clear", string? EventDescription = "", string? WorldLink = null, string TimeZone = "Coordinated Universal Time", string ImageURL = null)
+        public Schedule(DateTime StartTime, DateTime EndTime, ulong ServerId, string EventTitle, string HostURL, ulong? RoleId = null, ulong EventId = 0, ulong HostId = 0, string HostName = "clear", string? EventDescription = "", string? WorldLink = null, string ImageURL = null)
         {
-            if (TimeZone != null)
-            {
-                TimeZoneInfo TZI = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.DisplayName.Contains(TimeZone));
-                this.StartTime = TimeZoneInfo.ConvertTime(StartTime, TZI, TimeZoneInfo.Local);
-                this.EndTime = TimeZoneInfo.ConvertTime(EndTime, TZI, TimeZoneInfo.Local);
-                this.TimeZone = TimeZone;
-            }
-            else
-            {
-                this.StartTime = StartTime;
-                this.EndTime = EndTime;
-                this.TimeZone = "Coordinated Universal Time";
-            }
-
+            this.StartTime = StartTime;
+            this.EndTime = EndTime;
             this.ServerId = ServerId;
             this.EventTitle = EventTitle;
             this.EventId = EventId;
@@ -90,7 +77,6 @@ namespace SchedulingAssistant.Entities
             {
                 dbSchedule.StartTime = StartTime;
                 dbSchedule.EndTime = EndTime;
-                dbSchedule.TimeZone = TimeZone;
                 dbSchedule.ServerId = ServerId;
                 dbSchedule.EventId = EventId;
                 dbSchedule.Attendees = Attendees;
@@ -274,15 +260,11 @@ Available flags:
 */
         public string GetStartTime(DiscordDateTimeFormatting DDTF = DiscordDateTimeFormatting.F)
         {
-            var TZI = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.DisplayName.Contains(TimeZone));
-            DateTimeOffset temp = TimeZoneInfo.ConvertTime(StartTime, TimeZoneInfo.Local, TZI);
-            return $"<t:{temp.ToUnixTimeSeconds()}:{DDTF.ToString()}>";
+            return $"<t:{new DateTimeOffset(StartTime, TimeSpan.Zero).ToUnixTimeSeconds()}:{DDTF.ToString()}>";
         }
         public string GetEndTime(DiscordDateTimeFormatting DDTF = DiscordDateTimeFormatting.R)
         {
-            var TZI = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.DisplayName.Contains(TimeZone));
-            DateTimeOffset temp = TimeZoneInfo.ConvertTime(EndTime, TimeZoneInfo.Local, TZI);
-            return $"<t:{temp.ToUnixTimeSeconds()}:{DDTF.ToString()}>";
+            return $"<t:{new DateTimeOffset(EndTime, TimeSpan.Zero).ToUnixTimeSeconds()}:{DDTF.ToString()}>";
         }
 
         public string GetDiscordFormattedTimeMessage()
