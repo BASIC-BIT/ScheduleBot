@@ -255,7 +255,7 @@ namespace SchedulingAssistant.Commands
                     }
                     while (ctx.Guild.Roles.Values.FirstOrDefault(x => x.Name == RoleName) != null);
 
-                    DiscordRole = await ctx.Guild.CreateRoleAsync(RoleName);
+                    DiscordRole = await ctx.Guild.CreateRoleAsync(RoleName, mentionable: true);
                 }
                 else
                 {
