@@ -98,17 +98,32 @@ resource "aws_route_table_association" "public" {
 
 resource "aws_security_group" "ecs" {
   vpc_id = aws_vpc.main.id
+  
+  # HTTP access
   ingress {
     from_port = 80
     to_port = 80
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTP access"
   }
+  
+  # HTTPS access
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    description = "HTTPS access"
+  }
+  
+  # Outbound traffic
   egress {
     from_port = 0
     to_port = 0
     protocol = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    description = "Allow all outbound traffic"
   }
 }
 
@@ -201,6 +216,10 @@ resource "aws_ecs_task_definition" "main" {
         {
           containerPort = 80
           hostPort = 80
+        },
+        {
+          containerPort = 443
+          hostPort = 443
         }
       ]
       logConfiguration = {
@@ -251,6 +270,17 @@ resource "aws_ecs_service" "main" {
     subnets = concat(aws_subnet.public[*].id, aws_subnet.private[*].id)
     security_groups = [aws_security_group.ecs.id]
     assign_public_ip = true
+  }
+
+  # Configure service discovery for automatic DNS management
+  dynamic "service_registries" {
+    for_each = var.CREATE_DNS_RECORD ? [1] : []
+    content {
+      registry_arn = aws_service_discovery_service.schedulebot[0].arn
+      # Container name and port are optional when there's only one container
+      # container_name = "schedulebot"
+      # container_port = 80
+    }
   }
 
   lifecycle {

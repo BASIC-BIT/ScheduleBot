@@ -56,14 +56,18 @@ namespace SchedulingAssistant.Controllers
                 if (isActive.HasValue)
                     query = query.Where(s => s.IsActive == isActive.Value);
 
+                // Default behavior: Only show events that haven't ended yet
+                // unless hasEnded filter is explicitly provided
                 if (hasEnded.HasValue)
                     query = query.Where(s => s.HasEnded == hasEnded.Value);
+                else
+                    query = query.Where(s => !s.HasEnded);
 
                 // Get total count for pagination
                 var totalItems = await query.CountAsync();
                 var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-                // Apply pagination
+                // Apply pagination with chronological ordering by start time
                 var events = await query
                     .OrderBy(s => s.StartTime)
                     .Skip((page - 1) * pageSize)

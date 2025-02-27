@@ -38,4 +38,46 @@ variable "ENVIRONMENT" {
   description = "Deployment environment"
   type        = string
   default     = "production"
+}
+
+variable "DOMAIN_NAME" {
+  description = "Domain name for the ScheduleBot application"
+  type        = string
+  default     = ""
+}
+
+variable "CREATE_DNS_RECORD" {
+  description = "Whether to create DNS records for the application"
+  type        = bool
+  default     = false
+}
+
+variable "DNS_TTL" {
+  description = "TTL (Time To Live) for DNS records in seconds"
+  type        = number
+  default     = 300
+}
+
+variable "USE_EXISTING_HOSTED_ZONE" {
+  description = "Whether to use an existing Route53 hosted zone (set to true if domain is already registered in Route53)"
+  type        = bool
+  default     = true
+}
+
+variable "EXISTING_HOSTED_ZONE_ID" {
+  description = "The ID of the existing Route53 hosted zone for templevr.org (only needed if USE_EXISTING_HOSTED_ZONE is true)"
+  type        = string
+  default     = ""
+}
+
+variable "ENABLE_HTTPS" {
+  description = "Whether to enable HTTPS with an SSL certificate"
+  type        = bool
+  default     = true
+}
+
+variable "HEALTH_CHECK_PATH" {
+  description = "The path to use for DNS health checks"
+  type        = string
+  default     = "/"
 } 
