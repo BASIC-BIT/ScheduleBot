@@ -1,38 +1,41 @@
-﻿variable "discord_bot_token" {
+variable "DISCORD_BOT_TOKEN" {
   description = "The token of your discord bot."
   type = string
+  sensitive = true
 }
 
-variable "mysql_password" {
+variable "MYSQL_PASSWORD" {
   description = "MySQL password"
   type        = string
   sensitive   = true
 }
 
-variable GITHUB_TOKEN {
-  sensitive = true
-}
-variable AWS_TOKEN_KEY {
-  sensitive = true
-}
-variable DISCORD_CLIENT_ID {
-  sensitive = true
+variable "GITHUB_TOKEN" {
+  description = "GitHub token for CI/CD integration"
+  type        = string
+  sensitive   = true
 }
 
-variable "event_images_bucket_name" {
+variable "AWS_TOKEN_KEY" {
+  description = "AWS token key for authentication"
+  type        = string
+  sensitive   = true
+}
+
+variable "AWS_REGION" {
+  description = "AWS region to deploy resources"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "EVENT_IMAGES_BUCKET_NAME" {
   description = "Name of the S3 bucket for event images"
   type        = string
   default     = "scheduling-assistant-event-images"
 }
 
-variable "environment" {
+variable "ENVIRONMENT" {
   description = "Deployment environment"
   type        = string
   default     = "production"
-}
-
-variable "aws_region" {
-  description = "AWS region to deploy resources"
-  type        = string
-  default     = "us-east-1"
-}
+} 

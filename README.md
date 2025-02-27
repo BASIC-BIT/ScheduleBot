@@ -20,6 +20,7 @@ ScheduleBot is a open-source self-hosted Discord Event management bot. It's curr
 - Attendance tracking
 - Slash Commands
 - Containerized! (Docker)
+- AWS Deployment with Terraform
 
 # Commands
 
@@ -225,6 +226,50 @@ MYSQL_USER_PW="schedulebot" #Required
 
 </br>  
 
+## AWS Deployment with Terraform
+
+For production deployments, you can use Terraform to deploy the bot to AWS. This will set up all the necessary infrastructure including:
+
+- S3 bucket for event images
+- RDS MySQL database
+- ECS Fargate service to run the bot
+- ECR repository for container images
+- CloudWatch log group for monitoring
+
+### Prerequisites
+
+- [Terraform](https://www.terraform.io/downloads.html) (v1.0.0 or newer)
+- AWS CLI configured with appropriate credentials
+- Docker installed locally for building the container image
+
+### Deployment Steps
+
+1. Navigate to the `_infra` directory
+2. Create a `terraform.tfvars` file with your configuration:
+   ```
+   AWS_REGION = "us-east-1"
+   EVENT_IMAGES_BUCKET_NAME = "your-bucket-name"
+   ENVIRONMENT = "production"
+   MYSQL_PASSWORD = "your-secure-password"
+   DISCORD_BOT_TOKEN = "your-discord-token"
+   # Add other variables as needed
+   ```
+3. Initialize Terraform:
+   ```
+   terraform init
+   ```
+4. Preview the changes:
+   ```
+   terraform plan
+   ```
+5. Apply the changes:
+   ```
+   terraform apply
+   ```
+6. After deployment, you'll see outputs with important resource information
+7. The application will automatically use the deployed resources through its `TerraformOutputProvider`
+
+For more detailed information about the Terraform setup, see the [Terraform README](./_infra/README.md).
 
 # License 
 

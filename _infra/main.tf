@@ -135,7 +135,7 @@ resource "aws_db_instance" "default" {
   instance_class = "db.t4g.micro"
   db_name = "schedulebot"
   username = "schedulebot"
-  password = var.mysql_password
+  password = var.MYSQL_PASSWORD
   vpc_security_group_ids = [aws_security_group.rds.id]
   db_subnet_group_name = aws_db_subnet_group.main.name
 }
@@ -214,7 +214,7 @@ resource "aws_ecs_task_definition" "main" {
       environment = [
         {
           name = "DISCORD_BOT_TOKEN"
-          value = var.discord_bot_token
+          value = var.DISCORD_BOT_TOKEN
         },
         {
           name = "MYSQL_SERVER"
@@ -230,7 +230,7 @@ resource "aws_ecs_task_definition" "main" {
         },
         {
           name = "MYSQL_USER_PW"
-          value = var.mysql_password
+          value = var.MYSQL_PASSWORD
         },
         {
           name = "DISCORD_EVENT_ROLE_PREFIX"

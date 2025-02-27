@@ -1,10 +1,10 @@
 # S3 bucket for event images
 resource "aws_s3_bucket" "event_images" {
-  bucket = var.event_images_bucket_name
+  bucket = var.EVENT_IMAGES_BUCKET_NAME
   
   tags = {
     Name        = "Event Images"
-    Environment = var.environment
+    Environment = var.ENVIRONMENT
   }
 }
 
