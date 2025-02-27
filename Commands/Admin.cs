@@ -76,6 +76,7 @@ namespace SchedulingAssistant.Commands
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex);
                     await ctx.CreateResponseAsync($"There was an error updating your server setting", true);
                     throw ex;
                 }
@@ -87,8 +88,7 @@ namespace SchedulingAssistant.Commands
         public async Task GetAttendanceReport(
             InteractionContext ctx,
             [Option("StartDate", "Date to start the report", false)] string StartDateForEvent,
-            [Option("EndDate", "Date to end the report", false)] string EndDateForEvent,
-            [Option("TimeZone", "Fully Written Time Zone", false)] string TimeZoneName
+            [Option("EndDate", "Date to end the report", false)] string EndDateForEvent
         )
         {
             DateTime? StartTime = null;
@@ -112,18 +112,6 @@ namespace SchedulingAssistant.Commands
                 await ctx.CreateResponseAsync($"Not a valid End Time Format", true);
                 return;
             }
-            try
-            {
-                _ = TimeZoneInfo.FindSystemTimeZoneById(TimeZoneName);
-            }
-            catch
-            {
-                await ctx.CreateResponseAsync($"Not a valid Time Zone. Use fully qualified name and not code.", true);
-                return;
-            }
-            TimeZoneInfo TZI = TimeZoneInfo.FindSystemTimeZoneById(TimeZoneName);
-            StartTime = TimeZoneInfo.ConvertTime((DateTime)StartTime, TZI, TimeZoneInfo.Local);
-            EndTime = TimeZoneInfo.ConvertTime((DateTime)EndTime, TZI, TimeZoneInfo.Local);
 
             await ctx.CreateResponseAsync($"Getting your report. Hold tight...", true);
 
@@ -143,13 +131,12 @@ namespace SchedulingAssistant.Commands
 
                     foreach (var s in Schedules)
                     {
-                        var ScheduleStartTime = TimeZoneInfo.ConvertTime((DateTime)s.StartTime, TimeZoneInfo.Local, TZI);
                         foreach (var a in Attendees.Where(x => x.ScheduleId == s.Id))
                         {
                             Output.Add(new()
                             {
                                 EventId = s.EventId,
-                                Date = ScheduleStartTime,
+                                Date = s.StartTime,
                                 Description = s.EventDescription,
                                 Name = s.EventTitle,
                                 UserId = a.UserId,
@@ -268,7 +255,7 @@ namespace SchedulingAssistant.Commands
                     }
                     while (ctx.Guild.Roles.Values.FirstOrDefault(x => x.Name == RoleName) != null);
 
-                    DiscordRole = await ctx.Guild.CreateRoleAsync(RoleName);
+                    DiscordRole = await ctx.Guild.CreateRoleAsync(RoleName, mentionable: true);
                 }
                 else
                 {
@@ -309,6 +296,7 @@ namespace SchedulingAssistant.Commands
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex);
                         await ctx.CreateResponseAsync($"There was an error updating your event.", true);
                     }
                 }
@@ -331,7 +319,6 @@ namespace SchedulingAssistant.Commands
             [Option("ProfileURL", "VRC Profile User Hosting Event", false)] string HostURL,
             [Option("World", "Link to world", false)] string WorldLink = "",
             [Option("Host", "User Hosting Event", false)] DiscordUser Host = null,
-            [Option("TimeZone", "Fully Written Time Zone", false)] string TimeZoneName = "Coordinated Universal Time",
             [Option("ImageURL", "Image URL", false)] string Image = null
             )
         {
@@ -372,19 +359,6 @@ namespace SchedulingAssistant.Commands
                 catch
                 {
                     await ctx.CreateResponseAsync($"Not a valid End Time Format", true);
-                    return;
-                }
-                try
-                {
-                    var TMZ = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.DisplayName.Contains(TimeZoneName));
-                    if (TMZ == null)
-                    {
-                        await ctx.CreateResponseAsync($"Not a valid Time Zone. Use fully qualified name and not code.", true);
-                    }
-                }
-                catch
-                {
-                    await ctx.CreateResponseAsync($"Not a valid Time Zone. Use fully qualified name and not code.", true);
                     return;
                 }
 
@@ -463,7 +437,7 @@ namespace SchedulingAssistant.Commands
 
                 try
                 {
-                    Schedule NewEvent = new((DateTime)StartTime, (DateTime)EndTime, ctx.Guild.Id, EventName, HostURL, (ulong)DiscordRole.Id, HostId: (ulong)HostId, HostName: HostName, TimeZone: TimeZoneName, WorldLink: WorldLink, EventDescription: Description, ImageURL: Image);
+                    Schedule NewEvent = new((DateTime)StartTime, (DateTime)EndTime, ctx.Guild.Id, EventName, HostURL, (ulong)DiscordRole.Id, HostId: (ulong)HostId, HostName: HostName, WorldLink: WorldLink, EventDescription: Description, ImageURL: Image);
                     await NewEvent.Update();
 
                     var dbEvent = db.Schedules.FirstOrDefault(x => x.RoleId == (ulong)DiscordRole.Id);
@@ -507,7 +481,6 @@ namespace SchedulingAssistant.Commands
             [Option("Host", "User Hosting Event. Tag bot to remove clear role.", false)] DiscordUser Host = null,
             [Option("ProfileURL", "VRC Profile User Hosting Event", false)] string HostURL = null,
             [Option("World", "Link to world. Type 'clear' to remove link", false)] string? WorldLink = null,
-            [Option("TimeZone", "Fully Written Time Zone", false)] string TimeZoneName = null,
             [Option("ImageURL", "Image URL. Type \'clear\' to remove link", false)] string Image = null
             )
         {
@@ -556,8 +529,7 @@ namespace SchedulingAssistant.Commands
                 {
                     Schedule.EventDescription = Description;
                 }
-
-
+                
                 if (!string.IsNullOrEmpty(EventStart))
                 {
                     try
@@ -598,29 +570,6 @@ namespace SchedulingAssistant.Commands
                         return;
                     }
                 }
-
-
-                if (TimeZoneName != null)
-                {
-                    try
-                    {
-                        var TMZ = TimeZoneInfo.GetSystemTimeZones().FirstOrDefault(x => x.DisplayName.Contains(TimeZoneName));
-                        if (TMZ == null)
-                        {
-                            await ctx.CreateResponseAsync($"Not a valid Time Zone. Use fully qualified name and not code.", true);
-                        }
-                    }
-                    catch
-                    {
-                        await ctx.CreateResponseAsync($"Not a valid Time Zone. Use fully qualified name and not code.", true);
-                        return;
-                    }
-
-                    Schedule.TimeZone = TimeZoneName;
-                }
-
-
-
 
                 try
                 {
@@ -702,13 +651,15 @@ namespace SchedulingAssistant.Commands
                         await Schedule.Update();
                         await ctx.CreateResponseAsync($"Here you go!", true);
                     }
-                    catch
+                    catch (Exception e)
                     {
+                        Console.WriteLine(e);
                         await ctx.CreateResponseAsync($"There was an error updating your event.", true);
                     }
                 }
-                catch
+                catch (Exception e)
                 {
+                    Console.WriteLine(e);
                     await ctx.CreateResponseAsync($"There was an error updating your event.", true);
 
                 }
@@ -719,6 +670,8 @@ namespace SchedulingAssistant.Commands
         private static Regex VrcUserUrl = new Regex(@"https:\/\/vrchat\.com\/home\/user\/usr_([a-zA-Z0-9-]{36})");
         private static Regex VrcWorldUrl = new Regex(@"https:\/\/vrchat\.com\/home\/world\/wrld_([a-zA-Z0-9-]{36})");
 
+        private static TimeSpan CstOffset = TimeSpan.FromHours(-6);
+        
         private async Task CleanupRoles(List<DiscordRole> roles)
         {
             foreach (var discordRole in roles)
@@ -726,7 +679,6 @@ namespace SchedulingAssistant.Commands
                 await discordRole.DeleteAsync();
             }
         }
-
 
         // [SlashCommand("CleanupAllEventRoles", "Cleanup all event roles, dangerous with existing events!")]
         // [SlashRequireUserPermissions(Permissions.ManageMessages)]
@@ -773,15 +725,9 @@ namespace SchedulingAssistant.Commands
 
             foreach (var e in events)
             {
-                // TODO: Fix this hacky timezone nonsense
-                var startDateUnspecified = DateTime.Parse($"{e.StartDate} {e.StartTime}");
-                var endDateUnspecified = DateTime.Parse($"{e.EndDate} {e.EndTime}");
-
-                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
-                DateTime startDateCstTime = DateTime.SpecifyKind(startDateUnspecified, DateTimeKind.Unspecified);
-                DateTime startDate = DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeToUtc(startDateCstTime, cstZone), DateTimeKind.Unspecified);
-                DateTime endDateCstTime = DateTime.SpecifyKind(endDateUnspecified, DateTimeKind.Unspecified);
-                DateTime endDate = DateTime.SpecifyKind(TimeZoneInfo.ConvertTimeToUtc(endDateCstTime, cstZone), DateTimeKind.Unspecified);
+                // TODO: Convert this from hardcoded CST offset to something else?
+                var startDate = new DateTimeOffset(DateTime.Parse($"{e.StartDate} {e.StartTime}"), CstOffset);
+                var endDate =  new DateTimeOffset(DateTime.Parse($"{e.EndDate} {e.EndTime}"), CstOffset);
                 
                 // Parse the first match of VrcUserUrl
                 var userUrlMatch = VrcUserUrl.Match(e.Who);
@@ -825,7 +771,7 @@ namespace SchedulingAssistant.Commands
                     // {
                     //     Console.WriteLine(systemTimeZone.DisplayName);
                     // }
-                    Schedule NewEvent = new(startDate, endDate, ctx.Guild.Id, e.Subject, userUrl, (ulong)DiscordRole.Id, HostId: 0, HostName: "clear", TimeZone: "(UTC-06:00) Central Time (Chicago)", WorldLink: worldUrl, EventDescription: description, ImageURL: null);
+                    Schedule NewEvent = new(startDate.UtcDateTime, endDate.UtcDateTime, ctx.Guild.Id, e.Subject, userUrl, (ulong)DiscordRole.Id, HostId: 0, HostName: "clear", WorldLink: worldUrl, EventDescription: description, ImageURL: null);
                     await NewEvent.Update(db);
                     createdSchedules.Add(NewEvent);
 
@@ -893,40 +839,37 @@ namespace SchedulingAssistant.Commands
             {
                 var schedule = schedules[i];
                 var number = i + 1;
+
+                var utcTime = new DateTimeOffset(schedule.StartTime);
+                var localTime = utcTime.ToOffset(CstOffset);
+                var dayOfTheWeek = localTime.ToString("dddd");
                 
-                // TODO: Fix this hacky timezone nonsense
-                TimeZoneInfo cstZone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
-                DateTimeOffset time =
-                    new DateTimeOffset(DateTime.SpecifyKind(schedule.StartTime, DateTimeKind.Unspecified),
-                        -cstZone.GetUtcOffset(DateTime.UtcNow));
-                // TODO: SOMEHOW the day of the week is off by one!??!?! what the heck
-                var dayOfTheWeek = time.AddDays(-1).ToString("dddd");
-                
-                var discordTimeString = $"<t:{time.ToUnixTimeSeconds()}:F>";
+                var discordTimeString = $"<t:{utcTime.ToUnixTimeSeconds()}:F>";
 
                 var message = await channel.GetMessageAsync(schedule.EventId);
                 var messageUrl = message.JumpLink;
 
-                output += $"📅  {number}.  {dayOfTheWeek}: [**{schedule.EventTitle}**]({messageUrl}) on {discordTimeString}\n" +
-                          $"{schedule.EventDescription}\n";
+                output +=
+                    $"📅  {number}.  {dayOfTheWeek}: [**{schedule.EventTitle}**]({messageUrl}) on {discordTimeString}\n";
+                          // $"{schedule.EventDescription}\n";
 
-                List<string> links = new List<string>();
+                // List<string> links = new List<string>();
                 
                 // if (!string.IsNullOrEmpty(schedule.HostURL))
                 // {
                 //     links.Add($"[Add The Host]({schedule.HostURL})");
                 // }
-                links.Add($"[Sign up here!]({messageUrl})");
+                // links.Add($"[Sign up here!]({messageUrl})");
                 // if (!string.IsNullOrEmpty(schedule.WorldLink))
                 // {
                 //     links.Add($"[World Location]({schedule.WorldLink})\n");
                 // }
                 // links.Add($"[VRChat Group](https://vrc.group/NOFACE.0408)");
                 // links.Add($"[Discord](https://discord.gg/thefaceless)");
-
-                output += $"{string.Join(" - ", links)}\n";
-
-                output += "\n";
+                //
+                // output += $"{string.Join(" - ", links)}\n";
+                //
+                // output += "\n";
             }
 
             return output;

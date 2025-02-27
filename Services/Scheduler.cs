@@ -57,7 +57,7 @@ namespace SchedulingAssistant.Services
             {
 
                 List<ServerSetting> servers = db.ServerSettings.ToList();
-                var dt = DateTime.Now.ToUniversalTime();
+                var dt = DateTimeOffset.UtcNow;
 
                 // Schedule
                 List<Schedule> schedules = new List<Schedule>();
