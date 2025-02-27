@@ -104,7 +104,19 @@ namespace SchedulingAssistant.Services
                 {
                     loggerService.LogInformation("Starting Web API service...");
                     var webApiService = _serviceProvider.GetRequiredService<IWebApiService>();
-                    await webApiService.StartAsync(args);
+                    // Start WebApiService without awaiting its completion
+                    _ = Task.Run(async () => {
+                        try {
+                            await webApiService.StartAsync(args);
+                        }
+                        catch (Exception ex) {
+                            loggerService.LogError("Error in WebApiService background task", ex);
+                        }
+                    });
+                    
+                    // Give the Web API a moment to initialize
+                    await Task.Delay(2000);
+                    loggerService.LogInformation("Web API service started in background");
                 }
                 
                 if (!webApiOnly)
@@ -113,10 +125,25 @@ namespace SchedulingAssistant.Services
                     
                     try
                     {
+                        loggerService.LogInformation("Before GetRequiredService<IDiscordBotService>()");
                         var discordBotService = _serviceProvider.GetRequiredService<IDiscordBotService>();
                         loggerService.LogInformation("Discord bot service instance successfully retrieved");
-                        await discordBotService.StartAsync();
-                        loggerService.LogInformation("Discord bot service StartAsync() method completed");
+                        
+                        // Start the Discord bot in a separate task
+                        _ = Task.Run(async () => {
+                            try {
+                                loggerService.LogInformation("Inside background task, about to call StartAsync()");
+                                await discordBotService.StartAsync();
+                                loggerService.LogInformation("Discord bot service StartAsync() method completed");
+                            }
+                            catch (Exception ex) {
+                                loggerService.LogError("Discord bot service failed to start in background task", ex);
+                            }
+                        });
+                        
+                        // Give the Discord bot a moment to initialize
+                        await Task.Delay(1000);
+                        loggerService.LogInformation("Discord bot service started in background");
                     }
                     catch (Exception ex)
                     {
