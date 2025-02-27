@@ -15,8 +15,20 @@ namespace SchedulingAssistant.Entities
         public virtual DbSet<Attendence> Attenants { get; set; }
         public virtual DbSet<ServerSetting> ServerSettings { get; set; }
 
+        public DBEntities()
+        {
+        }
+
+        public DBEntities(DbContextOptions<DBEntities> options)
+            : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            if (optionsBuilder.IsConfigured)
+                return;
+                
             string ConnectionString = Environment.GetEnvironmentVariable("DISCORD_BOT_CONNECTION_STRING") ?? "";
 
             if (string.IsNullOrEmpty(ConnectionString))
@@ -28,9 +40,6 @@ namespace SchedulingAssistant.Entities
                 ConnectionString = "server=" + Server + ";user=" + User + ";password=" + Pass + ";database=" + DB + ";";
             }
             
-
-
-
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
             optionsBuilder.UseMySql(ConnectionString, serverVersion);
         }

@@ -16,39 +16,35 @@ services:
             - '3306:3306'
         volumes:
             - db:/var/lib/mysql
-            - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
         networks:
             - scheduleBot-network
         env_file:
             - .env
         healthcheck:
-            test: ["CMD", "mysqladmin", "-u {MYSQL_USER}", "-p {MYSQL_USER_PW}",  "ping", "-h", "localhost"]
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
             interval: 30s
             timeout: 10s
             retries: 3
-    bot:
+    schedulingassistant:
         depends_on:
             db:
                 condition: service_healthy
-        hostname: scheduleBot-bot
+        hostname: scheduleBot-service
         restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
         environment:
-            DISCORD_BOT_TOKEN: '${DISCORD_BOT_TOKEN}'
-            DISCORD_EVENT_ROLE_PREFIX: '${DISCORD_EVENT_ROLE_PREFIX}'
-            # Option A: Use if you want to use a standard connection to your MySQL database
-            MYSQL_SERVER: '${MYSQL_SERVER}' # optional (Default: scheduleBot-db)
-            MYSQL_DATABASE: '${MYSQL_DB}' # optional (Default: ScheduleBot)
-            MYSQL_USER: '${MYSQL_USER}' # optional (Default: scheduleBot)
-            MYSQL_PASSWORD: '${MYSQL_USER_PW}' # optional (Default: scheduleBot)
-
-            # Option B: Set if you want to use a special connection to your MySQL database  
-            DISCORD_BOT_CONNECTION_STRING: '${DISCORD_BOT_CONNECTION_STRING}' # optional
-
-        image: 'schedulingassistant:latest'
+            ASPNETCORE_ENVIRONMENT: "Development"
+        ports:
+            - "5000:80"
+            - "5001:443"
         networks:
             - scheduleBot-network
         env_file:
             - .env
+        volumes:
+            - ./:/app/data
 volumes:
   db:
     driver: local

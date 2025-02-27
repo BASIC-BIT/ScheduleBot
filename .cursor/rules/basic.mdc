@@ -1,0 +1,5 @@
+---
+description: Global Rule. This rule should ALWAYS be loaded.
+globs: *,**/*
+---
+Always use powershell syntax when running commands.  Never use && or ||

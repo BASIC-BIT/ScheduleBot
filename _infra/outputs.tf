@@ -21,3 +21,11 @@ output "ecs_service_url" {
 output "db_endpoint" {
   value = aws_db_instance.default.endpoint
 }
+
+output "event_images_bucket_domain_name" {
+  value = aws_s3_bucket.event_images.bucket_regional_domain_name
+}
+
+output "event_images_bucket_website_endpoint" {
+  value = aws_s3_bucket_website_configuration.event_images_website.website_endpoint
+}
