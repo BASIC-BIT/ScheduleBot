@@ -64,4 +64,4 @@ jobs:
             -H "Accept: application/json" \
             -d '{
               "signal": "restart"
-            }'
+            }' 

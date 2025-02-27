@@ -1,0 +1,69 @@
+version: '3.8'
+
+networks:
+  traefik-public:
+    external: true
+  schedulebot-network:
+    internal: false
+
+services:
+  traefik:
+    image: traefik:v2.9
+    container_name: traefik
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro
+      - ./acme.json:/acme.json
+    networks:
+      - traefik-public
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.dashboard.middlewares=auth"
+      - "traefik.http.middlewares.auth.basicauth.users=${TRAEFIK_DASHBOARD_AUTH}"
+
+  schedulebot:
+    image: duinrahaic/schedulebot:latest
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - DISCORD_BOT_TOKEN=${DISCORD_BOT_TOKEN}
+      - DISCORD_EVENT_ROLE_PREFIX=${DISCORD_EVENT_ROLE_PREFIX}
+      - MYSQL_SERVER=db
+      - MYSQL_DATABASE=ScheduleBot
+      - MYSQL_USER=schedulebot
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - traefik-public
+      - schedulebot-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.schedulebot.rule=Host(`schedulebot.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.schedulebot.entrypoints=websecure"
+      - "traefik.http.routers.schedulebot.tls.certresolver=letsencrypt"
+
+  db:
+    image: mysql:8.0.26
+    restart: always
+    environment:
+      - MYSQL_DATABASE=ScheduleBot
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=schedulebot
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - schedulebot-network
+    labels:
+      - "traefik.enable=false"
+
+volumes:
+  db_data: 

@@ -1,5 +1,164 @@
+# ScheduleBot
 
-![alt text](https://raw.githubusercontent.com/Duinrahaic/ScheduleBot/master/Resources/ScheduleBotLogo.png?token=GHSAT0AAAAAACEVC7KNJPX2H33RJJ4BMXIUZFHMXSA)
+ScheduleBot is a flexible scheduling service designed for Discord communities. It helps server administrators create, manage, and notify members about upcoming events.
+
+## Features
+
+- Create and manage scheduled events
+- Send automatic notifications and reminders
+- Customizable event roles for access control
+- Web-based event calendar
+- RESTful API for integration with other services
+- Discord bot integration
+
+## Deployment Options
+
+Choose the deployment method that best fits your needs:
+
+### 1. Pterodactyl Panel Deployment (Recommended)
+
+The simplest way to deploy and manage ScheduleBot is using the Pterodactyl Panel, which provides a user-friendly web interface:
+
+```bash
+# Run the Pterodactyl setup script
+./_infra/scripts/pterodactyl-setup.sh --panel-url https://your-panel-url --api-key your-api-key --node-id 1 --allocation-id 1
+```
+
+This script will:
+- Create a new server in Pterodactyl for ScheduleBot
+- Configure it with the correct environment variables
+- Set up webhooks for automatic updates from GitHub
+
+See the [Deployment Guide](./_infra/README.md) for detailed instructions on Pterodactyl setup.
+
+### 2. Docker with Traefik (For Multiple Services)
+
+For users who want to run multiple services with automatic SSL certificates:
+
+```bash
+# Run the Traefik setup script
+./_infra/scripts/setup-traefik.sh
+```
+
+This setup leverages Traefik as a reverse proxy, providing:
+- Automatic SSL certificate issuance and renewal
+- Service discovery
+- Load balancing
+- Dashboard for monitoring
+
+### 3. AWS Deployment (For Production at Scale)
+
+For production deployments with scalability and high availability:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ScheduleBot.git
+cd ScheduleBot/_infra
+
+# Configure variables
+cp terraform.tfvars.sample terraform.tfvars
+nano terraform.tfvars  # Edit with your settings
+
+# Deploy
+terraform init
+terraform apply
+```
+
+This will create all necessary AWS resources including ECS, RDS, S3, etc.
+
+### 4. Development Setup
+
+For local development:
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ScheduleBot.git
+cd ScheduleBot
+
+# Set up the database
+# ...database setup instructions...
+
+# Run the application
+dotnet run
+```
+
+## Continuous Updates from GitHub
+
+ScheduleBot supports multiple options for staying up-to-date with the latest code:
+
+### 1. Pterodactyl Automatic Updates (Recommended)
+
+When using Pterodactyl Panel, updates are handled automatically:
+
+1. During setup, a GitHub webhook is configured
+2. When changes are pushed to the repository, GitHub notifies Pterodactyl
+3. Pterodactyl pulls the latest changes and restarts the application
+4. No additional scripts or services required
+
+### 2. Alternative Update Methods
+
+For non-Pterodactyl deployments, the following options are available:
+
+#### For Docker/Traefik Deployments: Standalone Webhook
+
+This approach runs a small webhook receiver outside Docker containers:
+
+```bash
+# On Linux/Mac
+sudo ./_infra/scripts/setup-webhook-linux.sh
+
+# On Windows (run as Administrator)
+.\_infra\scripts\setup-webhook-windows.ps1
+```
+
+#### Server-side Pull with GitHub Actions
+
+GitHub Actions can automatically deploy changes via SSH:
+
+1. Add your server SSH credentials to GitHub repository secrets
+2. GitHub will connect to your server and pull changes
+3. The deployment script will update the application
+
+#### Client-side Pull with Scheduled Tasks
+
+Your server can periodically check for and apply updates:
+
+```bash
+# Linux/Mac (add to crontab)
+0 * * * * /path/to/schedulebot/_infra/scripts/check-updates.sh >> /path/to/logs/update.log 2>&1
+
+# Windows (PowerShell)
+$action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-File C:\schedulebot\_infra\scripts\check-updates.ps1"
+$trigger = New-ScheduledTaskTrigger -Once -At (Get-Date) -RepetitionInterval (New-TimeSpan -Hours 1)
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "ScheduleBot Update Check"
+```
+
+## Environment Variables
+
+ScheduleBot can be configured with the following environment variables:
+
+- `DISCORD_BOT_TOKEN`: Your Discord bot token (required)
+- `MYSQL_PASSWORD`: Database password (required)
+- `ENVIRONMENT`: Deployment environment (Production, Development)
+- `DISCORD_EVENT_ROLE_PREFIX`: Prefix for Discord event roles
+- `GITHUB_WEBHOOK_SECRET`: Secret for validating GitHub webhooks
+
+## Documentation
+
+- [User Guide](./docs/user_guide.md) - How to use ScheduleBot
+- [Admin Guide](./docs/admin_guide.md) - Administration and management
+- [API Documentation](./docs/api.md) - RESTful API reference
+- [Deployment Guide](./_infra/README.md) - Deployment options and instructions
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+![ScheduleBot Logo](https://raw.githubusercontent.com/Duinrahaic/ScheduleBot/master/Resources/ScheduleBotLogo.png?token=GHSAT0AAAAAACEVC7KNJPX2H33RJJ4BMXIUZFHMXSA)
 
 ScheduleBot is a open-source self-hosted Discord Event management bot. It's currently built to assist small-to-large discords community events.
 
