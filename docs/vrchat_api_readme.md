@@ -41,7 +41,6 @@ Retrieves a list of events with pagination and filtering options.
       "eventDescription": "Let's meet in VRChat!",
       "startTime": "2023-07-15T18:00:00Z",
       "endTime": "2023-07-15T20:00:00Z",
-      "timeZone": "Coordinated Universal Time",
       "hostName": "EventHost",
       "worldLink": "https://vrchat.com/home/world/wrld_abc123",
       "imageUrl": "https://your-s3-bucket.s3.amazonaws.com/events/123.jpg",

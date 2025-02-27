@@ -75,7 +75,6 @@ namespace SchedulingAssistant.Controllers
                         eventDescription = s.EventDescription,
                         startTime = s.StartTime,
                         endTime = s.EndTime,
-                        timeZone = s.TimeZone,
                         hostName = s.HostName,
                         worldLink = s.WorldLink,
                         imageUrl = s.ImageURL,
