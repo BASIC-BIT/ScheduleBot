@@ -61,12 +61,23 @@ namespace SchedulingAssistant.Services
 
         public string GetDiscordBotToken()
         {
-            // Get from environment
-            string token = EnvironmentConfig.GetEnvironmentVariable("DISCORD_BOT_TOKEN");
+            // Get from environment using both methods for redundancy
+            string token = Environment.GetEnvironmentVariable("DISCORD_BOT_TOKEN");
+            
+            // If not found directly, try through configuration
+            if (string.IsNullOrEmpty(token))
+            {
+                token = _configuration["DISCORD_BOT_TOKEN"];
+                _logger.LogDebug($"Discord bot token retrieved from IConfiguration, length: {token?.Length ?? 0}");
+            }
+            else
+            {
+                _logger.LogDebug($"Discord bot token retrieved directly from Environment.GetEnvironmentVariable, length: {token?.Length ?? 0}");
+            }
             
             if (string.IsNullOrEmpty(token))
             {
-                _logger.LogError("Discord bot token not found in environment variables");
+                _logger.LogError("Discord bot token not found in environment variables or configuration");
             }
             
             return token;

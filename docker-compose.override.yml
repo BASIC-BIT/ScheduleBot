@@ -34,7 +34,22 @@ services:
             context: .
             dockerfile: Dockerfile
         environment:
+            # Discord Bot configuration - preserved from base file
+            DISCORD_BOT_TOKEN: '${DISCORD_BOT_TOKEN}'
+            DISCORD_EVENT_ROLE_PREFIX: '${DISCORD_EVENT_ROLE_PREFIX}'
+            # Database connection - preserved from base file
+            MYSQL_SERVER: '${MYSQL_SERVER}'
+            MYSQL_DB: '${MYSQL_DB}'
+            MYSQL_USER: '${MYSQL_USER}'
+            MYSQL_USER_PW: '${MYSQL_USER_PW}'
+            # AWS configuration - preserved from base file
+            AWS_ACCESS_KEY: '${AWS_ACCESS_KEY}'
+            AWS_SECRET_KEY: '${AWS_SECRET_KEY}'
+            AWS_REGION: '${AWS_REGION}'
+            AWS_BUCKET_NAME: '${AWS_BUCKET_NAME}'
+            # Development override
             ASPNETCORE_ENVIRONMENT: "Development"
+            ASPNETCORE_URLS: "http://+:80"
         ports:
             - "5000:80"
             - "5001:443"

@@ -110,8 +110,18 @@ namespace SchedulingAssistant.Services
                 if (!webApiOnly)
                 {
                     loggerService.LogInformation("Starting Discord Bot service...");
-                    var discordBotService = _serviceProvider.GetRequiredService<IDiscordBotService>();
-                    await discordBotService.StartAsync();
+                    
+                    try
+                    {
+                        var discordBotService = _serviceProvider.GetRequiredService<IDiscordBotService>();
+                        loggerService.LogInformation("Discord bot service instance successfully retrieved");
+                        await discordBotService.StartAsync();
+                        loggerService.LogInformation("Discord bot service StartAsync() method completed");
+                    }
+                    catch (Exception ex)
+                    {
+                        loggerService.LogError("Error starting Discord bot service", ex);
+                    }
                 }
                 
                 loggerService.LogInformation("All services started successfully, application is now running");

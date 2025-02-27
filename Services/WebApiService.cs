@@ -124,9 +124,14 @@ namespace SchedulingAssistant.Services
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            else
+            {
+                // Only use HTTPS redirection in production environment
+                _loggerService.LogInformation("Production environment detected, enabling HTTPS redirection");
+                app.UseHttpsRedirection();
+            }
 
             // Configure standard middleware
-            app.UseHttpsRedirection();
             app.UseCors("AllowVRChat");
             app.UseAuthorization();
             app.MapControllers();
