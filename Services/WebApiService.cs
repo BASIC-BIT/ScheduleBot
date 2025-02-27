@@ -126,9 +126,9 @@ namespace SchedulingAssistant.Services
             }
             else
             {
-                // Only use HTTPS redirection in production environment
-                _loggerService.LogInformation("Production environment detected, enabling HTTPS redirection");
-                app.UseHttpsRedirection();
+                // Temporarily disabled HTTPS redirection to avoid certificate issues
+                _loggerService.LogInformation("Production environment detected, but HTTPS redirection is temporarily disabled");
+                // app.UseHttpsRedirection();  // Commented out to avoid certificate issues
             }
 
             // Configure standard middleware
