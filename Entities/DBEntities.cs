@@ -14,6 +14,8 @@ namespace SchedulingAssistant.Entities
         public virtual DbSet<Schedule> Schedules { get; set; }
         public virtual DbSet<Attendence> Attenants { get; set; }
         public virtual DbSet<ServerSetting> ServerSettings { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
+        public virtual DbSet<TicketMessage> TicketMessages { get; set; }
 
         public DBEntities()
         {
@@ -42,6 +44,18 @@ namespace SchedulingAssistant.Entities
             
             var serverVersion = new MySqlServerVersion(new Version(8, 0, 26));
             optionsBuilder.UseMySql(ConnectionString, serverVersion);
+        }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            
+            // Configure the relationship between Ticket and TicketMessage
+            modelBuilder.Entity<Ticket>()
+                .HasMany(t => t.Messages)
+                .WithOne(m => m.Ticket)
+                .HasForeignKey(m => m.TicketId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

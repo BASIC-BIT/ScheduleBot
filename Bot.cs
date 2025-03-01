@@ -38,6 +38,7 @@ namespace SchedulingAssistant
                 .AddSingleton<DatabaseHandler>()
                 .AddSingleton<InteractivityHandler>()
                 .AddSingleton<Scheduler>()
+                .AddSingleton<TicketService>()
                 .AddLogging(configure => configure.AddSerilog());
 
 
@@ -86,6 +87,7 @@ namespace SchedulingAssistant
             await services.GetRequiredService<CommandHandler>().Initalize();
             await services.GetRequiredService<InteractivityHandler>().Initalize();
             await services.GetRequiredService<Scheduler>().Initalize();
+            await services.GetRequiredService<TicketService>().Initialize();
 
             _Client.Ready += OnReady;
             _Client.GuildAvailable += OnGuildAvailable;

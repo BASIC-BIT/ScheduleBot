@@ -5,6 +5,7 @@ using DSharpPlus.SlashCommands.EventArgs;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using SchedulingAssistant.Commands;
 using System.Reflection;
 
 namespace SchedulingAssistant.Services
@@ -36,7 +37,10 @@ namespace SchedulingAssistant.Services
             try
             {
                 _commands.RegisterCommands(Assembly.GetExecutingAssembly());
-
+                
+                // Explicitly register the TicketCommands class
+                _commands.RegisterCommands<TicketCommands>();
+                _logger.LogInformation("Ticket commands registered successfully");
             }
             catch (Exception ex)
             {
