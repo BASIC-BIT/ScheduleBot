@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using DSharpPlus.SlashCommands.Attributes;
+using Microsoft.EntityFrameworkCore;
 using SchedulingAssistant.Entities;
 using SchedulingAssistant.Models;
 using System.Globalization;
@@ -670,7 +671,7 @@ namespace SchedulingAssistant.Commands
         private static Regex VrcUserUrl = new Regex(@"https:\/\/vrchat\.com\/home\/user\/usr_([a-zA-Z0-9-]{36})");
         private static Regex VrcWorldUrl = new Regex(@"https:\/\/vrchat\.com\/home\/world\/wrld_([a-zA-Z0-9-]{36})");
 
-        // TODO: Deal with DST nonsense (normally -6)
+        // Note: DST fix applied, adjust as needed for future DST changes
         private static TimeSpan CstOffset = TimeSpan.FromHours(-5);
         
         private async Task CleanupRoles(List<DiscordRole> roles)
@@ -693,6 +694,153 @@ namespace SchedulingAssistant.Commands
         //
         //     await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent("Done!"));
         // }
+        [SlashCommand("FixDSTTimes", "Fix Daylight Savings Time issue by adjusting future event times")]
+        [SlashRequireUserPermissions(Permissions.ManageMessages)]
+        public async Task FixDSTTimes(
+            InteractionContext ctx,
+            [Option("Action", "The action to perform (validate, preview, migrate)", false)] 
+            [Choice("validate", "validate")]
+            [Choice("preview", "preview")]
+            [Choice("migrate", "migrate")] 
+            string action = "validate"
+        )
+        {
+            await ctx.DeferAsync(true);
+            
+            try
+            {
+                switch (action.ToLower())
+                {
+                    case "validate":
+                        // Show validation report
+                        var validationOutput = await RunDSTValidation();
+                        await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(validationOutput));
+                        break;
+                        
+                    case "preview":
+                        // Preview what will be changed
+                        var previewOutput = await RunDSTPreview();
+                        await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(previewOutput));
+                        break;
+                        
+                    case "migrate":
+                        // Run the migration directly
+                        await RunDSTMigration();
+                        await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(
+                            "✅ DST Time Fix migration completed successfully. All future events have been adjusted backward by 1 hour."));
+                        break;
+                        
+                    default:
+                        await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(
+                            "Invalid action. Please use 'validate', 'preview', or 'migrate'."));
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                await ctx.EditResponseAsync(new DiscordWebhookBuilder().WithContent(
+                    $"❌ Error executing DST migration: {ex.Message}"));
+                Console.WriteLine(ex);
+            }
+        }
+        
+        private async Task<string> RunDSTValidation()
+        {
+            using var db = new DBEntities();
+            var now = DateTime.UtcNow.Date;
+            
+            // Count affected events
+            var futureEvents = db.Schedules
+                .Where(s => s.StartTime >= now)
+                .OrderBy(s => s.StartTime)
+                .ToList();
+            
+            if (futureEvents.Count == 0)
+            {
+                return "No future events found that would be affected by the migration.";
+            }
+            
+            return $"Found {futureEvents.Count} future events that would be adjusted by the DST fix. " +
+                   $"Use `/FixDSTTimes preview` to see what changes would be made, or `/FixDSTTimes migrate` to apply the fix.";
+        }
+        
+        private async Task<string> RunDSTPreview()
+        {
+            using var db = new DBEntities();
+            var now = DateTime.UtcNow.Date;
+            
+            // Get future events
+            var futureEvents = db.Schedules
+                .Where(s => s.StartTime >= now)
+                .OrderBy(s => s.StartTime)
+                .ToList();
+            
+            if (futureEvents.Count == 0)
+            {
+                return "No future events found that would be affected by the migration.";
+            }
+            
+            // Create preview of changes
+            var sampleEvents = futureEvents.Take(5).ToList(); // Show up to 5 examples
+            var output = new System.Text.StringBuilder();
+            
+            output.AppendLine($"📅 **DST Fix Preview** - {futureEvents.Count} events will be adjusted\n");
+            output.AppendLine("The following events will be adjusted backward by 1 hour:\n");
+            
+            foreach (var evt in sampleEvents)
+            {
+                var currentStart = evt.StartTime;
+                var currentEnd = evt.EndTime;
+                var newStart = currentStart.AddHours(-1);
+                var newEnd = currentEnd.AddHours(-1);
+                
+                output.AppendLine($"**{evt.EventTitle}**");
+                output.AppendLine($"- Current start: {currentStart.ToString("yyyy-MM-dd HH:mm")} UTC");
+                output.AppendLine($"- New start: {newStart.ToString("yyyy-MM-dd HH:mm")} UTC");
+                output.AppendLine($"- Current end: {currentEnd.ToString("yyyy-MM-dd HH:mm")} UTC");
+                output.AppendLine($"- New end: {newEnd.ToString("yyyy-MM-dd HH:mm")} UTC\n");
+            }
+            
+            if (futureEvents.Count > 5)
+            {
+                output.AppendLine($"...and {futureEvents.Count - 5} more events\n");
+            }
+            
+            output.AppendLine("To apply these changes, run `/FixDSTTimes migrate`");
+            
+            return output.ToString();
+        }
+        
+        private async Task RunDSTMigration()
+        {
+            using var db = new DBEntities();
+            await using var transaction = await db.Database.BeginTransactionAsync();
+            
+            try
+            {
+                var now = DateTime.UtcNow.Date;
+                
+                // Get future events
+                var futureEvents = await db.Schedules
+                    .Where(s => s.StartTime >= now)
+                    .ToListAsync();
+                
+                // Adjust each event
+                foreach (var evt in futureEvents)
+                {
+                    evt.StartTime = evt.StartTime.AddHours(-1);
+                    evt.EndTime = evt.EndTime.AddHours(-1);
+                    await evt.Update(db);
+                }
+                
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
 
         [SlashCommand("ImportEvents", "Import events from TeamUp CSV Export")]
         [SlashRequireUserPermissions(Permissions.ManageMessages)]
