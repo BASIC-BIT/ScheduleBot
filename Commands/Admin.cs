@@ -670,7 +670,8 @@ namespace SchedulingAssistant.Commands
         private static Regex VrcUserUrl = new Regex(@"https:\/\/vrchat\.com\/home\/user\/usr_([a-zA-Z0-9-]{36})");
         private static Regex VrcWorldUrl = new Regex(@"https:\/\/vrchat\.com\/home\/world\/wrld_([a-zA-Z0-9-]{36})");
 
-        private static TimeSpan CstOffset = TimeSpan.FromHours(-6);
+        // TODO: Deal with DST nonsense (normally -6)
+        private static TimeSpan CstOffset = TimeSpan.FromHours(-5);
         
         private async Task CleanupRoles(List<DiscordRole> roles)
         {
