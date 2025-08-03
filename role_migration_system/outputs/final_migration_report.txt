@@ -1,0 +1,708 @@
+FACELESS ROLE MIGRATION - FINAL REPORT
+======================================================================
+
+Generated: 2025-08-02 23:24:06.159283
+Total assignments: 398
+Unique users: 150
+Unique roles: 21
+
+ROLE ASSIGNMENTS BY USER
+----------------------------------------------------------------------
+
+no_44 (ID: 101499886884651008):
+  - Photography (2 events)
+  - VIBE (1 events)
+  - Esoterics (1 events)
+  - Vocal Class (1 events)
+  - YOGA (1 events)
+  - Coding (1 events)
+  - ASL Class (5 events)
+  - GOGO Dance (1 events)
+  - Meditation (2 events)
+  - Music Production (1 events)
+
+n0cturnal._ (ID: 1022547160975294566):
+  - Breakin' (3 events)
+
+mitsukaki (ID: 102911741737828352):
+  - Breakin' (1 events)
+
+anon3ko (ID: 1037506503738937426):
+  - YOGA (3 events)
+  - Meditation (4 events)
+
+mitey (ID: 103767981187694592):
+  - Vocal Class (1 events)
+  - YOGA (2 events)
+  - Breakin' (1 events)
+  - Meditation (1 events)
+
+kiotakashi (ID: 105427667146293248):
+  - DJ Class (2 events)
+  - Animation Dance (1 events)
+  - VIBE (13 events)
+  - YOGA (6 events)
+  - Blender/Unity (4 events)
+  - GOGO Dance (15 events)
+  - Beyond Dance (3 events)
+  - Sociology (1 events)
+
+miyuno.exe (ID: 1059979607383736361):
+  - YOGA (10 events)
+
+.dayhawk (ID: 1063573805160747068):
+  - DJ Class (3 events)
+  - Vocal Class (2 events)
+  - Blender/Unity (2 events)
+  - Coding (2 events)
+  - Music Production (2 events)
+
+merton (ID: 106429894430302208):
+  - VIBE (1 events)
+  - YOGA (1 events)
+  - Blender/Unity (1 events)
+
+evebynx (ID: 107570567015579648):
+  - Photography (1 events)
+
+camu292 (ID: 1081523617021579294):
+  - Esoterics (1 events)
+
+myspiritway (ID: 1096742748234711090):
+  - Meditation (1 events)
+
+blissfulasperations. (ID: 1099544873364889732):
+  - Coding (2 events)
+  - Music Production (1 events)
+
+neon_snipe (ID: 114999108996956165):
+  - ASL Class (2 events)
+
+misaki4352 (ID: 1189410645112795176):
+  - YOGA (3 events)
+
+njnagrimsdottir (ID: 119945788586590208):
+  - Vocal Class (1 events)
+  - YOGA (1 events)
+  - Beyond Dance (10 events)
+
+_kitrion_ (ID: 1206819550465757278):
+  - GOGO Dance (1 events)
+
+starsrebellion (ID: 1215347872623497316):
+  - GOGO Dance (1 events)
+
+pinkicloud (ID: 1222293216468926625):
+  - Meditation (1 events)
+
+hangman_merchants_21368 (ID: 1245196799795527720):
+  - DJ Class (1 events)
+
+dro29 (ID: 126086140846407680):
+  - YOGA (5 events)
+  - Breakin' (4 events)
+  - Blender/Unity (3 events)
+
+bboy.jin (ID: 1265246005411053681):
+  - Breakin' (1 events)
+
+phoenix051323 (ID: 1285656355021131792):
+  - VIBE (1 events)
+  - ASL Class (1 events)
+
+willgold37 (ID: 1288959786154590363):
+  - Esoterics (1 events)
+
+ayeton (ID: 135691742937612288):
+  - Breakin' (1 events)
+
+_ratpunk (ID: 147237351788118018):
+  - Breakin' (1 events)
+
+tarkus_ (ID: 148388754044747776):
+  - House Dance (1 events)
+  - Waltz (1 events)
+
+elkeila (ID: 148745430996353024):
+  - Vocal Class (1 events)
+
+notarobotcat (ID: 150338531582148608):
+  - Vocal Class (1 events)
+  - YOGA (3 events)
+  - ASL Class (2 events)
+  - Music Production (1 events)
+
+dreivan (ID: 163910917870845962):
+  - DJ Class (1 events)
+
+ashmoney69 (ID: 166322439351959552):
+  - DJ Class (1 events)
+
+madness480 (ID: 169968484263002113):
+  - Breakin' (1 events)
+
+sleightlyout (ID: 170914233670696960):
+  - Breakin' (1 events)
+
+illucio (ID: 175304048310747137):
+  - Vocal Class (2 events)
+  - YOGA (2 events)
+
+punkarts (ID: 177766183775240192):
+  - Vocal Class (2 events)
+  - Music Production (1 events)
+
+pendikun (ID: 177930966252257290):
+  - Breakin' (1 events)
+
+djlimitbreak (ID: 178950222913863682):
+  - GOGO Dance (1 events)
+
+airbee_ (ID: 180340126944067585):
+  - DJ Class (1 events)
+  - Waltz (7 events)
+  - Bachata (5 events)
+  - Vocal Class (1 events)
+  - Breakin' (1 events)
+
+red.riding.hood (ID: 182009410837544960):
+  - Animation Dance (1 events)
+  - Waltz (1 events)
+  - Bachata (4 events)
+  - LOFT (1 events)
+  - Vocal Class (5 events)
+  - Breakin' (2 events)
+  - GOGO Dance (3 events)
+  - Beyond Dance (1 events)
+
+hunniibunny (ID: 183720544120602624):
+  - YOGA (2 events)
+
+ghosttowntunes (ID: 191322834599936001):
+  - Podcasts (1 events)
+
+.catz (ID: 192761893239128064):
+  - Music Production (1 events)
+
+okamiyoru (ID: 193030106636091393):
+  - YOGA (1 events)
+  - Breakin' (1 events)
+
+larens (ID: 204740758681550848):
+  - Breakin' (1 events)
+
+gabrielvis8 (ID: 206146702464385024):
+  - Photography (2 events)
+  - Breakin' (2 events)
+
+mionsa (ID: 209711249343119360):
+  - Vocal Class (1 events)
+  - YOGA (1 events)
+  - Blender/Unity (1 events)
+  - Coding (3 events)
+
+shinastark (ID: 210188515076472833):
+  - Vocal Class (1 events)
+
+basic_bit (ID: 211750261922725888):
+  - DJ Class (31 events)
+  - House Dance (1 events)
+  - Animation Dance (1 events)
+  - Photography (21 events)
+  - VIBE (19 events)
+  - LOFT (2 events)
+  - YOGA (27 events)
+  - Breakin' (24 events)
+  - Blender/Unity (28 events)
+  - Coding (26 events)
+  - ASL Class (1 events)
+  - GOGO Dance (5 events)
+  - Meditation (13 events)
+  - Podcasts (1 events)
+  - Beyond Dance (9 events)
+  - Music Production (5 events)
+  - Sociology (1 events)
+
+passtheketchup (ID: 215954273920483328):
+  - Esoterics (1 events)
+  - Blender/Unity (1 events)
+  - Beyond Dance (1 events)
+
+embryonic.synth (ID: 217069029620318208):
+  - Vocal Class (1 events)
+  - YOGA (2 events)
+  - Music Production (1 events)
+
+wh4tth3huh (ID: 221475839156420609):
+  - DJ Class (1 events)
+  - Music Production (1 events)
+
+queen_of_hearts (ID: 225071551148589056):
+  - YOGA (2 events)
+
+leisurelypie (ID: 225867532634947584):
+  - Vocal Class (1 events)
+
+foxyfoo (ID: 233815839806193664):
+  - Photography (1 events)
+  - VIBE (2 events)
+  - Esoterics (2 events)
+  - Vocal Class (3 events)
+  - YOGA (3 events)
+  - Breakin' (1 events)
+  - ASL Class (1 events)
+  - Meditation (3 events)
+  - Music Production (1 events)
+
+judgbin (ID: 246852491659051010):
+  - Breakin' (1 events)
+  - ASL Class (1 events)
+
+gregorif (ID: 247019280816799744):
+  - Esoterics (1 events)
+  - GOGO Dance (9 events)
+
+wiccke (ID: 248590944004341761):
+  - Blender/Unity (1 events)
+
+hypophrenia (ID: 249373049214861313):
+  - Waltz (2 events)
+  - Bachata (1 events)
+  - Photography (1 events)
+  - VIBE (2 events)
+  - Esoterics (1 events)
+  - Vocal Class (3 events)
+  - YOGA (3 events)
+  - Breakin' (1 events)
+  - Blender/Unity (3 events)
+  - Coding (1 events)
+  - ASL Class (3 events)
+  - GOGO Dance (4 events)
+  - Meditation (1 events)
+  - Beyond Dance (1 events)
+  - Music Production (1 events)
+
+chimera_ix (ID: 258653139048071178):
+  - DJ Class (5 events)
+  - Vocal Class (1 events)
+  - GOGO Dance (1 events)
+  - Music Production (1 events)
+
+minz3 (ID: 259769406819663873):
+  - YOGA (3 events)
+
+kitpup (ID: 261014673678270464):
+  - DJ Class (15 events)
+  - Animation Dance (1 events)
+  - Waltz (9 events)
+  - Bachata (10 events)
+  - VIBE (9 events)
+  - LOFT (2 events)
+  - Esoterics (8 events)
+  - Vocal Class (13 events)
+  - Blender/Unity (8 events)
+  - ASL Class (14 events)
+  - GOGO Dance (7 events)
+  - Meditation (1 events)
+  - Beyond Dance (2 events)
+  - Music Production (6 events)
+
+rubixcreates (ID: 261953445198561303):
+  - YOGA (1 events)
+
+mrmaximus97 (ID: 264292721542430720):
+  - DJ Class (2 events)
+  - VIBE (2 events)
+  - Esoterics (8 events)
+  - Vocal Class (8 events)
+  - YOGA (9 events)
+  - Coding (1 events)
+  - ASL Class (4 events)
+  - GOGO Dance (1 events)
+  - Meditation (6 events)
+  - Beyond Dance (1 events)
+  - Music Production (1 events)
+
+neon.lia (ID: 278217168489807873):
+  - House Dance (1 events)
+  - Beyond Dance (1 events)
+
+lotus7084 (ID: 282757724771713025):
+  - Vocal Class (1 events)
+  - YOGA (1 events)
+
+blackbelt33 (ID: 283102779772502016):
+  - DJ Class (2 events)
+  - VIBE (1 events)
+  - Breakin' (1 events)
+  - Blender/Unity (1 events)
+  - Coding (1 events)
+  - ASL Class (1 events)
+  - Meditation (1 events)
+  - Music Production (2 events)
+
+potato_kj (ID: 299329673400156171):
+  - Breakin' (1 events)
+
+foxoneo (ID: 299843010386984981):
+  - Waltz (7 events)
+  - Bachata (1 events)
+
+speckledjim. (ID: 305408899878486016):
+  - Esoterics (1 events)
+
+mr_pandaplaz (ID: 319180375790321666):
+  - Breakin' (1 events)
+
+ardescar (ID: 323181271104618498):
+  - YOGA (1 events)
+
+iimazikeen (ID: 325830164086915072):
+  - Breakin' (1 events)
+
+jettybandit (ID: 333773755648311296):
+  - Vocal Class (1 events)
+  - YOGA (2 events)
+  - Breakin' (1 events)
+  - Meditation (1 events)
+
+hamocorp (ID: 333958698877845504):
+  - Breakin' (2 events)
+
+mismos (ID: 340304794445021186):
+  - Breakin' (3 events)
+
+itzspookey (ID: 343785972099448834):
+  - Meditation (1 events)
+
+funpredictable (ID: 348095816881274881):
+  - Vocal Class (1 events)
+
+goldsberrie (ID: 349224593573281792):
+  - Sociology (1 events)
+
+chrisvenusangel (ID: 349439519013076992):
+  - Vocal Class (1 events)
+  - YOGA (3 events)
+  - Meditation (1 events)
+
+calixlix (ID: 351360773949358081):
+  - DJ Class (1 events)
+
+.moonstress (ID: 359819140263051265):
+  - Bachata (1 events)
+  - Vocal Class (2 events)
+  - YOGA (4 events)
+  - ASL Class (1 events)
+  - GOGO Dance (1 events)
+  - Meditation (1 events)
+
+dexi__ (ID: 375127938288582659):
+  - DJ Class (11 events)
+  - Podcasts (1 events)
+
+.rivlia (ID: 383123978631249920):
+  - YOGA (3 events)
+
+defiant5 (ID: 384149389809025024):
+  - Breakin' (1 events)
+  - Music Production (1 events)
+
+skye7734 (ID: 385523000549703682):
+  - Blender/Unity (3 events)
+
+smallfry3694 (ID: 387399668008484864):
+  - DJ Class (1 events)
+  - Vocal Class (1 events)
+  - Coding (3 events)
+  - ASL Class (2 events)
+  - Music Production (1 events)
+
+trippyhelix (ID: 388864412624093214):
+  - LOFT (1 events)
+  - Esoterics (1 events)
+
+novahyphen (ID: 407788360728313866):
+  - Breakin' (1 events)
+
+nekoyori (ID: 410270160406970369):
+  - Vocal Class (1 events)
+  - Breakin' (1 events)
+  - Blender/Unity (1 events)
+  - Music Production (1 events)
+
+lunaqua (ID: 413345571500458012):
+  - ASL Class (1 events)
+
+crumblyneptune (ID: 416698777089343488):
+  - Breakin' (2 events)
+
+eshton. (ID: 425230683166998529):
+  - ASL Class (1 events)
+  - GOGO Dance (1 events)
+
+akagitsune10 (ID: 426911207954448395):
+  - YOGA (2 events)
+
+theblindprophet (ID: 428436921761398784):
+  - Esoterics (1 events)
+  - Vocal Class (1 events)
+  - YOGA (2 events)
+  - Breakin' (1 events)
+  - Coding (2 events)
+  - ASL Class (3 events)
+  - Meditation (3 events)
+  - Beyond Dance (1 events)
+  - Music Production (1 events)
+
+miscellaneousbowl (ID: 429231435631689728):
+  - Animation Dance (1 events)
+  - Waltz (4 events)
+  - Bachata (7 events)
+  - Breakin' (1 events)
+  - ASL Class (1 events)
+  - Meditation (1 events)
+
+arrowls (ID: 434252213158936576):
+  - Vocal Class (1 events)
+  - GOGO Dance (1 events)
+
+whiteswan154 (ID: 435298328628953089):
+  - ASL Class (1 events)
+
+nyevius (ID: 439112134362923014):
+  - Photography (1 events)
+
+itsblush (ID: 456673820716302360):
+  - YOGA (1 events)
+
+claw504 (ID: 464113589385429060):
+  - YOGA (3 events)
+
+dj_clout (ID: 464591110245974016):
+  - YOGA (1 events)
+  - Breakin' (1 events)
+
+auserene (ID: 475072265403236363):
+  - YOGA (1 events)
+  - ASL Class (1 events)
+  - GOGO Dance (1 events)
+  - Meditation (1 events)
+
+zararosev (ID: 479531688880373760):
+  - Vocal Class (1 events)
+
+mercuryingemini (ID: 481277433291603977):
+  - DJ Class (1 events)
+  - Waltz (1 events)
+  - VIBE (1 events)
+  - Vocal Class (1 events)
+  - YOGA (1 events)
+  - Blender/Unity (1 events)
+  - Meditation (2 events)
+
+ultrashark (ID: 488866790039093249):
+  - Vocal Class (1 events)
+  - YOGA (2 events)
+  - Music Production (1 events)
+
+moondoodle (ID: 493020246580658177):
+  - YOGA (1 events)
+  - Meditation (1 events)
+
+ailamaster (ID: 503982209783431171):
+  - Vocal Class (1 events)
+
+sillybit666 (ID: 510003485417275393):
+  - DJ Class (7 events)
+  - Blender/Unity (2 events)
+  - Coding (1 events)
+  - Podcasts (1 events)
+
+loveuniversal7 (ID: 521111253473558529):
+  - YOGA (2 events)
+
+gaster04 (ID: 525436840774336542):
+  - GOGO Dance (2 events)
+
+deliciousdeli (ID: 526694934212771840):
+  - Breakin' (1 events)
+
+frumpyobject (ID: 527207876113072159):
+  - Vocal Class (2 events)
+
+zaccke (ID: 561561733915869194):
+  - Waltz (3 events)
+  - YOGA (3 events)
+
+misluni (ID: 581885320576892938):
+  - Waltz (13 events)
+  - Bachata (13 events)
+
+raid1487 (ID: 586888685794885632):
+  - Meditation (1 events)
+
+mukechiltmal (ID: 607474015694487553):
+  - GOGO Dance (1 events)
+
+unicornamazing (ID: 609402662638715033):
+  - Vocal Class (1 events)
+
+midori52 (ID: 618060042695868444):
+  - Bachata (1 events)
+  - Beyond Dance (1 events)
+
+grin.n.bareit (ID: 622302876647030795):
+  - Vocal Class (1 events)
+
+.love. (ID: 627588473729056769):
+  - ASL Class (1 events)
+
+taglog7 (ID: 633012337519099914):
+  - Waltz (2 events)
+  - Bachata (2 events)
+  - VIBE (1 events)
+  - LOFT (1 events)
+  - Esoterics (1 events)
+  - Vocal Class (2 events)
+  - YOGA (1 events)
+  - Breakin' (2 events)
+  - GOGO Dance (1 events)
+
+georgebraham (ID: 652350434966634526):
+  - Waltz (3 events)
+  - Bachata (2 events)
+
+roguewitxh (ID: 686914103804952589):
+  - Vocal Class (1 events)
+  - YOGA (3 events)
+  - Breakin' (1 events)
+  - Beyond Dance (1 events)
+  - Music Production (1 events)
+
+astrild (ID: 699933716415512616):
+  - Waltz (3 events)
+  - Bachata (2 events)
+  - Vocal Class (3 events)
+  - YOGA (1 events)
+  - GOGO Dance (2 events)
+  - Beyond Dance (1 events)
+
+hotaruchim (ID: 700373107843661841):
+  - Vocal Class (1 events)
+  - YOGA (3 events)
+  - Breakin' (1 events)
+  - GOGO Dance (1 events)
+  - Meditation (2 events)
+  - Beyond Dance (1 events)
+
+sqveeb (ID: 708145548976455680):
+  - House Dance (1 events)
+  - Waltz (2 events)
+  - Bachata (13 events)
+  - Blender/Unity (2 events)
+  - ASL Class (4 events)
+  - Beyond Dance (1 events)
+
+skulteran (ID: 718150787670212759):
+  - Esoterics (1 events)
+  - Music Production (2 events)
+
+shadowwolf3499 (ID: 728133624628641872):
+  - Vocal Class (1 events)
+
+lliver (ID: 736453436681486356):
+  - Breakin' (1 events)
+
+touchmesama6 (ID: 758734374119145504):
+  - VIBE (2 events)
+  - LOFT (1 events)
+  - YOGA (3 events)
+  - Breakin' (3 events)
+  - Coding (2 events)
+
+livtheunknown (ID: 760185793128955925):
+  - DJ Class (1 events)
+  - Esoterics (1 events)
+  - YOGA (1 events)
+  - Meditation (1 events)
+
+wickedproxy (ID: 764697065351544863):
+  - DJ Class (9 events)
+  - Photography (1 events)
+  - VIBE (17 events)
+  - LOFT (3 events)
+  - Blender/Unity (11 events)
+  - ASL Class (3 events)
+
+opheliaprime (ID: 775170178254110741):
+  - Vocal Class (2 events)
+  - Meditation (1 events)
+
+starcluster1231 (ID: 804740624191324190):
+  - Breakin' (2 events)
+
+icarusscorpion (ID: 806707581560946698):
+  - Vocal Class (1 events)
+  - Podcasts (1 events)
+
+mrwattsvr (ID: 821214940719218720):
+  - Bachata (1 events)
+  - Esoterics (2 events)
+  - Vocal Class (1 events)
+  - Breakin' (1 events)
+  - Blender/Unity (3 events)
+  - Coding (1 events)
+  - ASL Class (5 events)
+  - Beyond Dance (2 events)
+
+ironstrom_ackure (ID: 82611987091034112):
+  - DJ Class (1 events)
+
+danielmight (ID: 831383622199541790):
+  - Photography (3 events)
+  - Vocal Class (2 events)
+  - YOGA (4 events)
+  - Breakin' (5 events)
+  - Blender/Unity (5 events)
+  - GOGO Dance (4 events)
+
+spyy (ID: 832769069764575322):
+  - DJ Class (1 events)
+
+kyouki002 (ID: 896911505667289138):
+  - Waltz (1 events)
+
+nekobro_123 (ID: 919914140670234634):
+  - Meditation (4 events)
+
+sun_child03 (ID: 924356384223547495):
+  - GOGO Dance (1 events)
+
+elliesaurus (ID: 92804996990500864):
+  - Breakin' (3 events)
+
+agrov8 (ID: 937901779520217168):
+  - YOGA (1 events)
+
+gg4rr3tt (ID: 939618981797572640):
+  - Music Production (1 events)
+
+mr_anderson_c137 (ID: 946756867160436756):
+  - ASL Class (2 events)
+  - Meditation (1 events)
+
+oky (ID: 95313747517636608):
+  - YOGA (2 events)
+  - GOGO Dance (2 events)
+
+lupin_domena (ID: 955517810753290300):
+  - Vocal Class (1 events)
+
+kozykozy (ID: 959748368538669056):
+  - Animation Dance (1 events)
+  - Waltz (12 events)
+  - Bachata (10 events)
+
+shyrivers (ID: 965281440046653512):
+  - Blender/Unity (1 events)

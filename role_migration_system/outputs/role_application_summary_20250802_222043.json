@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-08-02T22:20:43.251319",
+  "guild_id": 480695542155051010,
+  "guild_name": "The Faceless",
+  "dry_run": true,
+  "test_limit": null,
+  "total_assignments": 517,
+  "successful": 0,
+  "already_has_role": 0,
+  "user_not_found": 0,
+  "role_not_found": 517,
+  "failed": 517
+}

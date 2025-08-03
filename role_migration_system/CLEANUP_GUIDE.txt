@@ -1,0 +1,59 @@
+ROLE MIGRATION PROJECT - CLEANUP GUIDE
+======================================
+
+KEEP THESE FILES (Critical for future reference)
+------------------------------------------------
+PROJECT_SUMMARY_ROLE_MIGRATION.md          - This comprehensive summary
+user_role_assignments_FINAL_FIXED_20250802_232315.csv  - Golden data we applied
+apply_roles_with_proper_rate_limit.py      - Production script with rate limiting
+extract_all_data.py                        - Core data extraction
+generate_user_role_assignments.py          - Core assignment generation
+fetch_members_simple.py                    - Working member fetch script
+check_bot_permissions.py                   - Permission debugging utility
+audit_data_quality.py                      - Data quality checker
+schedule_bot_events.csv                    - Original ScheduleBot data
+faceless_members_basic.csv                 - Discord member list
+all_discord_roles.csv                      - Complete role list
+relevant_class_roles.csv                   - Filtered class roles
+event_role_mappings_reviewed.csv           - Manual event->role mappings
+final_migration_report.txt                 - Detailed user report
+dry_run_summary.txt                        - Dry run results
+
+DELETE THESE FILES (Temporary/Debug)
+------------------------------------
+test_*.py                                  - All test scripts
+debug_*.py                                 - All debug scripts
+apply_roles_final.py                       - Has timeout issues
+apply_roles_optimized.py                   - Also has timeout issues
+fetch_all_guild_members.py                 - Hung, replaced
+All intermediate user_role_assignments_*.csv files except FINAL_FIXED
+verify_*.py scripts
+check_missing_roles.py
+fix_*.py scripts (data already fixed)
+rebuild_*.py scripts
+investigate_*.py scripts
+process_manual_*.py scripts
+map_manual_*.py scripts
+create_*.py scripts
+update_*.py scripts
+
+MAYBE KEEP (Depends on future needs)
+------------------------------------
+manual_discord_interests_*.csv files       - Manual data collection
+discord_scheduled_events.csv               - Limited but shows what we tried
+role_application_summary_*.json            - Application logs
+production_roles_current_*.csv             - Snapshot of roles at time
+
+KNOWN ISSUES IN KEPT FILES
+--------------------------
+- event_role_mappings_reviewed.csv has role IDs in scientific notation
+- Manual interest files have precision issues with role IDs
+- Always load CSV files with dtype={'role_id': str, 'user_id': str}
+
+QUICK REFERENCE
+---------------
+Total files created: ~50+
+Files to keep: ~15
+Files to delete: ~35
+Golden data file: user_role_assignments_FINAL_FIXED_20250802_232315.csv
+Production script: apply_roles_with_proper_rate_limit.py

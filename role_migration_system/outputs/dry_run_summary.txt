@@ -1,0 +1,34 @@
+ROLE MIGRATION DRY RUN SUMMARY
+==================================================
+
+Total assignments: 433
+Unique users: 150
+Unique roles: 26
+
+Assignments by role:
+  YOGA: 48
+  Vocal Class: 45
+  Breakin': 43
+  Meditation: 26
+  GOGO Dance: 24
+  ASL Class: 24
+  Music Production: 23
+  DJ: 21
+  Blender/Unity: 20
+  Waltz: 16
+  Beyond Dance: 16
+  Esoterics: 16
+  Bachata: 15
+  VIBE: 14
+  Coding: 13
+  Wotagei: 12
+  Portal Posse: 12
+  Photography: 9
+  Pole Dancing: 8
+  LOFT: 7
+  Animation Dance: 6
+  Podcasts: 5
+  House Dance: 4
+  Sociology: 3
+  VR Fundamentals: 2
+  CHILL: 1

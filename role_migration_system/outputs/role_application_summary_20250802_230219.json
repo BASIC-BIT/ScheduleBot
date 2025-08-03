@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-08-02T23:02:19.834675",
+  "guild_id": 1249723747896918109,
+  "guild_name": "BASIC's Creations",
+  "dry_run": true,
+  "test_limit": 10,
+  "total_assignments": 10,
+  "successful": 0,
+  "already_has_role": 0,
+  "user_not_found": 0,
+  "role_not_found": 10,
+  "failed": 10
+}

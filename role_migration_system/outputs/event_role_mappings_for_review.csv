@@ -1,0 +1,131 @@
+event_source,event_title,matched_role_id,matched_role_name,confidence_score,match_type
+schedule_bot,Community Night,1.210262400985727e+18,Community Manager,0.75,suggested
+schedule_bot,Faceless Meditation,1392211365455724605,Meditation,1.0,manual
+schedule_bot,Sign Sessions - ASL club - Xanori,1392210986387116173,ASL Class,1.0,manual
+schedule_bot,Intro to DJing with Embex,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Vibe Session - Lounge and Cypher,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Karokee Night,,,0.0,unmatched
+schedule_bot,Guide to Go-Go dancing with Gaster,1392211149595869254,GOGO Dance,1.0,manual
+schedule_bot,Yoga and Stretching with BASICBIT,1.3922105664075244e+18,YOGA,1.0,automatic
+schedule_bot,Creative Coding Club with Joyful Decay,1.3922108864874458e+18,Coding,1.0,automatic
+schedule_bot,ASL class with Wardragon,1.3922109863871163e+18,ASL Class,1.0,automatic
+schedule_bot,Producers Chat & Jam Session,1392213840225112155,Music Production,1.0,manual
+schedule_bot,Wotagei with Ruriki,1392210655318114415,Wotagei,1.0,manual
+schedule_bot,3D Modeling with Lowdisan,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,BEYOND DANCE w/ NJNA,1.3922133304579236e+18,Beyond Dance,1.0,automatic
+schedule_bot,Vocal classes with FoxyFoo,1.3922105109712776e+18,Vocal Class,1.0,automatic
+schedule_bot,Movie Night Mondays,,,0.0,unmatched
+schedule_bot,Breakin' Class with Ellie,1.3922107041400794e+18,Breakin',1.0,automatic
+schedule_bot,Snapshot Safari with Thunderhook,1392210170439929877,Photography,1.0,manual
+schedule_bot,Esoterics Class w/ FoxyFoo,1.3922104548222607e+18,Esoterics,1.0,automatic
+schedule_bot,VKET Excap Tracker Q&A w/ Elecholic Tech + Vibe Session w/ Ministry - LIVE DJ Dulce Arma!,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Yoga/Stretching with BASICBIT,1.3922105664075244e+18,YOGA,1.0,automatic
+schedule_bot,3D Modeling Class,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,Vibe Session AT VKET with Jeffe333!!,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,VR FUNDAMENTALS with NJNA,1392213286644219994,VR Fundamentals,1.0,manual
+schedule_bot,Weekly Staff Meeting,,,0.0,unmatched
+schedule_bot,VKET - Vibe Session - Lounge and Cypher - Chimera IX,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Q&A - Panda,,,0.0,unmatched
+schedule_bot,PJKT Dance Cypher Collab w/ Ministry - VirtuaLilly on the decks!,,,0.0,unmatched
+schedule_bot,Portal Posse - Megaman,1392212045323305020,Portal Posse,1.0,manual
+schedule_bot,Vibe Session - Lounge and Cypher - Embex,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,All Levels Pole Dancing w/ Archantos from VRPD (no pole required),1392211204864344175,Pole Dancing,1.0,manual
+schedule_bot,Vibe Session - Lounge and Cypher - Jeffe333,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Guide to Go-Go Dancing with Gregorif,1392211149595869254,GOGO Dance,1.0,manual
+schedule_bot,Phantom Sands by Nox Vitae,,,0.0,unmatched
+schedule_bot,Creative Coding Club with BASICBIT,1.3922108864874458e+18,Coding,1.0,automatic
+schedule_bot,DJ Q&A (Guest TBA),1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,PORTAL POSSE - Tea-Buggz,1392212045323305020,Portal Posse,1.0,manual
+schedule_bot,Vibe Session - Lounge and Cypher - CLAW504,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,DJing Podcast - Deirdre Darkk,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,VIBE Session - Lounge & Cipher - DulceArma,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Ballroom Waltz Dance Class With Luni,1.3922100759506493e+18,Waltz,1.0,automatic
+schedule_bot,Ballroom Bachata With Luni,1.3922101169246743e+18,Bachata,1.0,automatic
+schedule_bot,Vocal classes with ProfessorK,1.3922105109712776e+18,Vocal Class,1.0,automatic
+schedule_bot,F.A.C.E. Charity Variety Show,,,0.0,unmatched
+schedule_bot,Vibe Session - Lounge and Cypher - Claw,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Waltz Practice Day w/ Luni,1.3922100759506493e+18,Waltz,1.0,automatic
+schedule_bot,Pole Dancing - All Levels - Archantos from VRPD,1392211204864344175,Pole Dancing,1.0,manual
+schedule_bot,Photography Club with Thunderhook,1.3922101704399299e+18,Photography,1.0,automatic
+schedule_bot,PORTAL POSSE -  Tiny Love,1392212045323305020,Portal Posse,1.0,manual
+schedule_bot,Vibe Session - Lounge and Cypher - Dulce Arma,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Music Production with Embryonic,1.392213840225112e+18,Music Production,1.0,automatic
+schedule_bot,DJ Q&A with Musical Story,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,PORTAL POSSE -  Popn Marco,1392212045323305020,Portal Posse,1.0,manual
+schedule_bot,Vibe Session - Lounge and Cypher - CrossFade 1200,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,CHILL - The Den x The Faceless,1392210349956010075,CHILL,1.0,manual
+schedule_bot,DJ Q&A with Clout,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,LOFT,1.39221039322445e+18,LOFT,1.0,automatic
+schedule_bot,CROSSFADE BIRTHDAY PARTY COLLAB,,,0.0,unmatched
+schedule_bot,Karokee Night - The Den / GUYS NIGHT COLLAB,,,0.0,unmatched
+schedule_bot,DJing Q&A with Jeffe333,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Vibe Session - Lounge and Cypher - VirtuaLilly,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Pole Dancing w/ Archantos from VRPD,1392211204864344175,Pole Dancing,1.0,manual
+schedule_bot,DJing Q&A w/ Maus,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Collab Waltz class for Midnight Opera,1.3922100759506493e+18,Waltz,1.0,automatic
+schedule_bot,TALKS W/ CLOCKS,,,0.0,unmatched
+schedule_bot,DJing Q&A,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Portal Posse - OG Jaquency,1392212045323305020,Portal Posse,1.0,manual
+schedule_bot,House Dancing with FatalZodiac,1392209391872250027,House Dance,1.0,manual
+schedule_bot,Vibe Session - Lounge and Cypher - BASICBIT,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,DJing Q&A w/ AliceIsAlive & WillBtis,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Koi Roi animation dancing class,1.3922096772821855e+18,Animation Dance,0.6086956521739131,suggested
+schedule_bot,Beginner's Pole Dancing with Archantos,1392211204864344175,Pole Dancing,1.0,manual
+schedule_bot,CHILL,1392210349956010075,CHILL,1.0,manual
+schedule_bot,3D Modeling with BASICBIT,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,Intro to DJing,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Intro to DJing with Lilith Nocturna,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Vibe Session - Lounge and Cypher - Claw504 & DulceArma,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Beginner Unity/Blender - Workshop,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,Beginner Unity/Blender - BasicBit,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,DJ Q&A - Stayawhile,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Vibe Session - Lounge and Cypher - DulceArma,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,Yoga Stretching with BASICBIT,1.3922105664075244e+18,YOGA,1.0,automatic
+schedule_bot,3D Modeling Class - Hair with Bun Bun!,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,DJ Q&A with Embex,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Vibe Session - Lounge and Cypher - NecroNeko,1.3922102914370806e+18,VIBE,1.0,automatic
+schedule_bot,DJ Q&A with DJ Gear Bolt!,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Beyond Dance with NJNA,1.3922133304579236e+18,Beyond Dance,1.0,automatic
+schedule_bot,Creative Coding Club - Touch Designer,1.3922108864874458e+18,Coding,1.0,automatic
+schedule_bot,DJing Q&A with Dulce Arma,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Ballroom dance class with Luni,,,0.0,unmatched
+schedule_bot,3D Modeling Class with Merton,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,Test,,,0.0,unmatched
+schedule_bot,TBD,,,0.0,unmatched
+schedule_bot,Temple Tapestry of Thought: Unraveling the threads of Sociology with Deirdre Darkk,1.3922138885225188e+18,Sociology,1.0,automatic
+schedule_bot,Beginner Unity/Blender with VirtuaLilly and BASICBIT,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,VRChat Essentials with NjNA,,,0.0,unmatched
+schedule_bot,PORTAL POSSE - OG Jaquency Part 3,1392212045323305020,Portal Posse,1.0,manual
+schedule_bot,Karaoke Night,,,0.0,unmatched
+schedule_bot,The Secret Level x The Faceless Club Event!,,,0.0,unmatched
+schedule_bot,Beginner Unity/Blender with Merton and BASICBIT,1392210837330067576,Blender/Unity,1.0,manual
+schedule_bot,DJing Q&A with Murdokes,1.1630473108890624e+18,DJ,1.0,automatic
+schedule_bot,Photography Club - Thunderhook,1.3922101704399299e+18,Photography,1.0,automatic
+schedule_bot,Test Event,,,0.0,unmatched
+schedule_bot,TestEvent2,,,0.0,unmatched
+schedule_bot,TestEvent,,,0.0,unmatched
+discord_scheduled,Monday Night Movies,,,0.0,unmatched
+discord_scheduled,Breakin' Dance Class with Elliesaurus,1.3922107041400794e+18,Breakin',1.0,automatic
+discord_scheduled,Creative Coding Club with Joyful Decay,1.3922108864874458e+18,Coding,1.0,automatic
+discord_scheduled,VKET - Yoga / Stretching - BASICBIT,1.3922105664075244e+18,YOGA,1.0,automatic
+discord_scheduled,Vocal Class - FoxyFoo,1.3922105109712776e+18,Vocal Class,1.0,automatic
+discord_scheduled,VIBE  - Lounge and Cypher,1.3922102914370806e+18,VIBE,1.0,automatic
+discord_scheduled,VKET - Go Go Dancing - Gaster,1392211149595869254,GOGO Dance,1.0,manual
+discord_scheduled,ASL Practice Club w/ Xanori,1392210986387116173,ASL Class,1.0,manual
+discord_scheduled,ASL (Sign Language) - WarDragon,1392210986387116173,ASL Class,1.0,manual
+discord_scheduled,The Den and The Faceless OPEN MIC & Karaoke Night,,,0.0,unmatched
+discord_scheduled,Photography Club,1.3922101704399299e+18,Photography,1.0,automatic
+discord_scheduled,Faceless  Community Night,,,0.0,unmatched
+discord_scheduled,Producers Chat & Jam Session,1392213840225112155,Music Production,1.0,manual
+discord_scheduled,3D Modeling Class,1392210837330067576,Blender/Unity,1.0,manual
+discord_scheduled,Faceless Podcast,1392211714308837507,Podcasts,1.0,manual
+discord_scheduled,Yoga / Stretching - BASICBIT,1.3922105664075244e+18,YOGA,1.0,automatic
+discord_scheduled,Wotagei Japanese light stick dancing with Ruriki,1392210655318114415,Wotagei,1.0,manual
+discord_scheduled,Ballroom Waltz Dance Class with Luni,1.3922100759506493e+18,Waltz,1.0,automatic
+discord_scheduled,Beyond Dance w/ NJNA,1.3922133304579236e+18,Beyond Dance,1.0,automatic
+discord_scheduled,VKET - Vr Fundamentals - NJNA,1392213286644219994,VR Fundamentals,1.0,manual
+discord_scheduled,Guide to Go-Go Dancing - Gregorif,1392211149595869254,GOGO Dance,1.0,manual
+discord_scheduled,Faceless Meditation - ZenjiGuru,1392211365455724605,Meditation,1.0,manual
+discord_scheduled,Esoteric Class w/ FoxyFoo @ Temple,1392210454822260737,Esoterics,1.0,manual
+discord_scheduled,DJing Class w/ Embex,1.1630473108890624e+18,DJ,1.0,automatic
+discord_scheduled,Unity/Blender Class!,1392210837330067576,Blender/Unity,1.0,manual
