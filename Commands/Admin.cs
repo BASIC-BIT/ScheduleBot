@@ -673,7 +673,7 @@ namespace SchedulingAssistant.Commands
         private static Regex VrcWorldUrl = new Regex(@"https:\/\/vrchat\.com\/home\/world\/wrld_([a-zA-Z0-9-]{36})");
 
         // Note: DST fix applied, adjust as needed for future DST changes
-        private static TimeSpan CstOffset = TimeSpan.FromHours(-5);
+        private static TimeSpan CstOffset = TimeSpan.FromHours(-6);
         
         private async Task CleanupRoles(List<DiscordRole> roles)
         {
